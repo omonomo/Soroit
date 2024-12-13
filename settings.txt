@@ -1,0 +1,72 @@
+# 単純に行頭から始まる設定名で grep した後、行頭から = までを削除したものを設定値として読み込みます。
+# そのため、設定名は必ず行頭に入れてください。設定名の前に文字 (タブやスペース含む) があると読み込みません。
+# また設定名と = の間にスペースを入れた場合も設定名として正しく認識しません。
+# 同様に設定値から行末までに文字を入れないでください。設定値に''や""は不要です。
+# コメントの前に # を入れていますが、形式的に入れているだけで # から後がコメントというわけではありません。
+
+# フォントのバージョン
+FONT_VERSION=1.0.0b
+
+# フォント名
+FONT_FAMILYNAME=Soroit
+FONT_FAMILYNAME_SUFFIX=
+
+# ベンダー ID
+VENDOR_ID=PfEd
+
+# 著作権
+COPYRIGHT=Copyright (c) 2024 omonomo
+COPYRIGHT=[Source Code Pro]\n© 2023 Adobe (http://www.adobe.com/)
+COPYRIGHT=[Inconsolata]\nCopyright 2006 The Inconsolata Project Authors (https://github.com/cyrealtype/Inconsolata)
+COPYRIGHT=[Circle M+]\nCopyright(c) 2020 M+ FONTS PROJECT, itouhiro
+COPYRIGHT=[BIZ UDGothic]\nCopyright 2022 The BIZ UDGothic Project Authors (https://github.com/googlefonts/morisawa-biz-ud-gothic)
+COPYRIGHT=[NINJAL Hentaigana]\nCopyright(c) National Institute for Japanese Language and Linguistics (NINJAL), 2018.
+
+COPYRIGHT_NERD_FONTS=[Symbols Nerd Font]\nCopyright (c) 2016, Ryan McIntyre
+COPYRIGHT_LICENSE=SIL Open Font License Version 1.1 (http://scripts.sil.org/ofl)
+
+# 通常版の設定
+# 半角ｶﾅを除いた半角文字の拡大・縮小率 (%)
+SCALE_WIDTH_HANKAKU=100
+SCALE_HEIGHT_HANKAKU=100
+# カーニング横移動量 (em/1024)
+# ラテン文字
+MOVE_X_KERN_LATIN=16
+# 記号
+MOVE_X_KERN_SYMBOL=32
+
+# Loose 版の設定
+# 半角ｶﾅを除いた半角文字の拡大・縮小率 (%)
+SCALE_WIDTH_HANKAKU_LOOSE=100
+SCALE_HEIGHT_HANKAKU_LOOSE=100
+# カーニング横移動量 (em/1024)
+# ラテン文字
+MOVE_X_KERN_LATIN_LOOSE=18
+# 記号
+MOVE_X_KERN_SYMBOL_LOOSE=36
+
+# オブリーク体の設定
+# 傾き (tanθ * 100)
+TAN_OBLIQUE=16
+# 横移動量 (em/1024)
+MOVE_X_OBLIQUE=-48
+
+# Powerline の設定 (表示調整用)
+# 高さ拡大・縮小率 (%)
+SCALE_HEIGHT_POWERLINE=100
+# 縦移動量 (em/1024)
+MOVE_Y_POWERLINE=-10
+
+# calt・ss 変換時の小数の設定
+# 拡大・縮小率 (%)
+SCALE_DECIMAL=93
+
+# 演算子の設定
+# 通常の縦移動量 (em/1024 * 半角文字の縦拡大・縮小率)
+MOVE_Y_MATH=0
+# 上付き、下付きの縦移動量 (em/1024 * 半角文字の縦拡大・縮小率)
+MOVE_Y_S_MATH=0
+
+# 括弧の設定
+# 縦移動量 (em/1024 * 半角文字の縦拡大・縮小率)
+MOVE_Y_BRACKET=48
