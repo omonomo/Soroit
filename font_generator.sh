@@ -1092,12 +1092,27 @@ while (i < SizeOf(input_list))
     Move(0, 36)
     SetWidth(${width_hankaku})
 
+# ‶ (ベースフォントを置き換え)
+    Select(0u2033); Copy() # ″
+    Select(0u2036); Paste() # ‶
+    HFlip()
+    CorrectDirection()
+    SetWidth(${width_hankaku})
+
+# \`´′″‵‶ (拡大する ※‶ の加工の後に処理すること)
+    Select(0u0060) # \`
+    SelectMore(0u00b4) # ´
+    SelectMore(0u2032, 0u2033) # ′″
+    SelectMore(0u2035, 0u2036) # ‵‶
+    Scale(120, 120,  ${width_latin} / 2, 690)
+    SetWidth(${width_hankaku})
+
 # ‟ (ベースフォントを置き換え)
     Select(0u201d); Copy() # ”
     Select(0u201f); Paste() # ‟
     HFlip()
     CorrectDirection()
-    SetWidth(500)
+    SetWidth(${width_hankaku})
 
 # ℅ (斜め線を接続)
     # / を削除
