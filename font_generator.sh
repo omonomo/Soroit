@@ -164,9 +164,6 @@ move_x_oblique="-48" # 移動量 (後の処理で * 100 にする)
 move_y_math="0" # 通常
 move_y_s_math="0" # 上付き、下付き
 
-# 括弧移動量
-move_y_bracket="48"
-
 # calt用
 move_y_calt_separate3="-510" # 3桁区切り表示のY座標
 move_y_calt_separate4="452" # 4桁区切り表示のY座標
@@ -328,8 +325,6 @@ if [ -n "${settings_txt}" ]; then
     if [ -n "${S}" ]; then move_y_math="${S#MOVE_Y_MATH=}"; fi
     S=$(grep -m 1 "^MOVE_Y_S_MATH=" "${settings_txt}") # 上付き、下付きの演算子縦移動量
     if [ -n "${S}" ]; then move_y_s_math="${S#MOVE_Y_S_MATH=}"; fi
-    S=$(grep -m 1 "^MOVE_Y_BRACKET=" "${settings_txt}") # 括弧の縦移動量
-    if [ -n "${S}" ]; then move_y_bracket="${S#MOVE_Y_BRACKET=}"; fi
 fi
 
 # Powerline の Y座標移動量
@@ -664,7 +659,7 @@ move_y_calt_bar=$(bc <<< "scale=0; ${move_y_calt_bar} * ${scale_height_hankaku} 
 move_y_calt_tilde=$((move_y_math + 0)) # ~ のY座標移動量
 move_y_calt_tilde=$(bc <<< "scale=0; ${move_y_calt_tilde} * ${scale_height_latin} / 100") # ~ のY座標移動量
 move_y_calt_tilde=$(bc <<< "scale=0; ${move_y_calt_tilde} * ${scale_height_hankaku} / 100") # ~ のY座標移動量
-move_y_calt_math=$((- move_y_math + move_y_bracket - 55)) # +-= のY座標移動量
+move_y_calt_math=$((- move_y_math - 7)) # +-= のY座標移動量
 move_y_calt_math=$(bc <<< "scale=0; ${move_y_calt_math} * ${scale_height_latin} / 100") # *+-= のY座標移動量
 move_y_calt_math=$(bc <<< "scale=0; ${move_y_calt_math} * ${scale_height_hankaku} / 100") # *+-= のY座標移動量
 
@@ -1694,7 +1689,7 @@ while (i < SizeOf(input_list))
     j = 0
     while (j < SizeOf(brkt))
         Select(brkt[j]);
-        Move(0, ${move_y_bracket})
+        Move(0, 47)
         SetWidth(${width_latin})
         j += 1
     endloop
@@ -2702,9 +2697,9 @@ while (i < \$argc)
           Move(256 - ${move_x_hankaku}, 0)
         endif
         if (j == 7 || j == 58 || j == 90) # （ ［ ｛ # 全角縦書き対応のため少し上げる(後で元に戻す)
-            Move(128 - ${move_x_hankaku}, 13 - ${move_y_bracket})
+            Move(128 - ${move_x_hankaku}, 0)
         elseif (j == 8 || j == 60 || j == 92) # ） ］ ｝
-            Move(-128 + ${move_x_hankaku}, 13 - ${move_y_bracket})
+            Move(-128 + ${move_x_hankaku}, 0)
  #        elseif (j == 11 || j == 13) # ， ．
  #            Move(-256 + ${move_x_hankaku}, 0)
         endif
@@ -2986,23 +2981,6 @@ while (i < \$argc)
  #        endif
  #        j += 1
  #    endloop
-
-# 全角括弧を少し下げる (元に戻す)
-    Select(0uff08, 0uff09) # （）
-    SelectMore(0uff3b) # ［
-    SelectMore(0uff3d) # ］
-    SelectMore(0uff5b) # ｛
-    SelectMore(0uff5d) # ｝
- #    SelectMore(0uff5f, 0uff60) # ｟｠
- #    SelectMore(0u3008, 0u3009) # 〈〉
- #    SelectMore(0u3010, 0u3011) # 【】
- #    SelectMore(0u300a, 0u300b) # 《》
- #    SelectMore(0u3014, 0u3015) # 〔〕
- #    SelectMore(0u3016, 0u3017) # 〖〗
- #    SelectMore(0u3018, 0u3019) # 〘〙
- #    SelectMore(0u301a, 0u301b) # 〚〛
-    Move(0, -13 + ${move_y_bracket})
-    SetWidth(${width_zenkaku})
 
 # 横書き全角形に下線追加
     j = 0 # ！ - ｠
@@ -5388,15 +5366,14 @@ while (i < \$argc)
     if ("${emoji_flag}" == "false")
         Print("Option: Reduce the number of emoji glyphs")
 
-        # Emoji
  #        Select(0u0023)             # #
  #        SelectMore(0u002a)         # *
  #        SelectMore(0u0030, 0u0039) # 0 - 9
-        Select(0u00a9)             # ©
-        SelectMore(0u00ae)         # ®
-        SelectMore(0u203c)         # ‼
+ #        SelectMore(0u00a9)         # ©
+ #        SelectMore(0u00ae)         # ®
+        Select(0u203c)             # ‼
         SelectMore(0u2049)         # ⁉
-        SelectMore(0u2122)         # ™
+ #        SelectMore(0u2122)         # ™
         SelectMore(0u2139)         # ℹ
         SelectMore(0u2194, 0u2199) # ↔↕↖↗↘↙
         SelectMore(0u21a9, 0u21aa) # ↩↪
