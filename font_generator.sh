@@ -26,6 +26,9 @@ font_version="0.1.0"
 vendor_id="PfEd"
 
 tmpdir_name="font_generator_tmpdir" # 一時保管フォルダ名
+nopatchdir_name="nopatchFonts" # パッチ前フォントの保存フォルダ名
+nopatchsetdir_name="" # 各パッチ前フォントの設定と font_generator 情報の保存フォルダ名
+fileDataName="fileData" # calt_table_maker のサイズと変更日を保存するファイル名
 
 # グリフ保管アドレス
 num_mod_glyphs="4" # -t オプションで改変するグリフ数
@@ -147,6 +150,16 @@ move_y_sub="-184" # 下付き文字のY座標移動量
 move_y_super_base="100" # ベースフォントの上付き文字Y座標移動量 (Latin フォントとベースラインを合わせる)
 move_y_sub_base="0" # ベースフォントの下付き文字Y座標移動量 (Latin フォントとベースラインを合わせる)
 
+# 全角アンダーバー移動量
+move_y_zenkaku_underbar="-20"
+
+# 縦書き全角記号移動量
+move_x_vert_colon="65" # ：；
+move_x_vert_bar="67" # ｜
+move_x_vert_solidus="42" # ／＼
+move_x_vert_math="-13" # ＝－＜＞
+move_y_vert_bbar="42" # ￤
+
 # 縦書き全角ラテン小文字移動量
 move_y_vert_1="-10"
 move_y_vert_2="10"
@@ -226,6 +239,7 @@ ${HOME}/Library/Fonts /Library/Fonts \
 # Set flags
 mode="" # 生成モード
 
+compose_flag="true" # フォントを合成 (既に同じ設定で作成したパッチ前フォントがない)
 leaving_tmp_flag="false" # 一時ファイル残す
 loose_flag="false" # Loose 版にする
 visible_zenkaku_space_flag="true" # 全角スペース可視化
@@ -366,6 +380,7 @@ font_generator_help()
     echo "  -h                     Display this information"
     echo "  -V                     Display version number"
     echo "  -x                     Cleaning temporary files" # 一時作成ファイルの消去のみ
+    echo "  -X                     Cleaning temporary files and saved nopatch fonts" # 一時作成ファイルとパッチ前フォントの消去のみ
     echo "  -f /path/to/fontforge  Set path to fontforge command"
     echo "  -v                     Enable verbose mode (display fontforge's warning)"
     echo "  -l                     Leave (do NOT remove) temporary files"
@@ -390,7 +405,7 @@ font_generator_help()
 }
 
 # Get options
-while getopts hVxf:vlN:n:wZzubtOsceojSdPp OPT
+while getopts hVxXf:vlN:n:wZzubtOsceojSdPp OPT
 do
     case "${OPT}" in
         "h" )
@@ -404,6 +419,14 @@ do
             echo "Option: Cleaning temporary files"
             echo "Remove temporary files"
             rm -rf ${tmpdir_name}.*
+            exit 0
+            ;;
+        "X" )
+            echo "Option: Cleaning temporary files and saved nopatch fonts"
+            echo "Remove temporary files"
+            rm -rf ${tmpdir_name}.*
+            echo "Remove nopatch fonts"
+            rm -rf "${nopatchdir_name}"
             exit 0
             ;;
         "f" )
@@ -653,7 +676,7 @@ echo
 move_y_calt_colon=$((move_y_math + 82)) # : のY座標移動量
 move_y_calt_colon=$(bc <<< "scale=0; ${move_y_calt_colon} * ${scale_height_latin} / 100") # : のY座標移動量
 move_y_calt_colon=$(bc <<< "scale=0; ${move_y_calt_colon} * ${scale_height_hankaku} / 100") # : のY座標移動量
-move_y_calt_bar=$((move_y_math + 82)) # | のY座標移動量
+move_y_calt_bar=$((move_y_math + 56)) # | のY座標移動量
 move_y_calt_bar=$(bc <<< "scale=0; ${move_y_calt_bar} * ${scale_height_latin} / 100") # | のY座標移動量
 move_y_calt_bar=$(bc <<< "scale=0; ${move_y_calt_bar} * ${scale_height_hankaku} / 100") # | のY座標移動量
 move_y_calt_tilde=$((move_y_math + 0)) # ~ のY座標移動量
@@ -1245,7 +1268,8 @@ while (i < SizeOf(input_list))
 # ¦ (隙間を開ける)
 
     # 破線無しを保管して加工
-    Select(0u007c); Copy() # |
+    Select(0u007c); Move(0, 26) # |
+    Copy() # |
     Select(${address_store_visi_latin} + 1); Paste() # 保管所
     Move(0, 75)
     PasteWithOffset(0, -75)
@@ -2647,7 +2671,7 @@ while (i < \$argc)
 
 # ＿ (latin フォントの _ に合わせる)
     Select(0uff3f) # ＿
-    Move(0, -20)
+    Move(0, ${move_y_zenkaku_underbar})
     SetWidth(${width_zenkaku})
 
 # 演算子を上下に移動
@@ -2686,7 +2710,10 @@ while (i < \$argc)
     # ! - }
     j = 0
     while (j < 93)
-        if (j != 11 && j != 13 && j != 62) # ，．＿
+        if (j != 62\
+         && j !=  7 && j != 58 && j != 90\
+         && j !=  8 && j != 60 && j != 92\
+         && j != 11 && j != 13) # ＿ （［｛ ）］｝ ，．
           if (j == 91)
             Select(${address_store_visi_latin} + 1) # ｜ (全角縦棒を実線にする)
           else
@@ -2696,19 +2723,20 @@ while (i < \$argc)
           Select(0uff01 + j); Paste()
           Move(256 - ${move_x_hankaku}, 0)
         endif
-        if (j == 7 || j == 58 || j == 90) # （ ［ ｛ # 全角縦書き対応のため少し上げる(後で元に戻す)
-            Move(128 - ${move_x_hankaku}, 0)
-        elseif (j == 8 || j == 60 || j == 92) # ） ］ ｝
-            Move(-128 + ${move_x_hankaku}, 0)
+ #        if (j == 7 || j == 58 || j == 90) # （ ［ ｛
+ #            Move(128 - ${move_x_hankaku}, 0)
+ #        elseif (j == 8 || j == 60 || j == 92) # ） ］ ｝
+ #            Move(-128 + ${move_x_hankaku}, 0)
  #        elseif (j == 11 || j == 13) # ， ．
  #            Move(-256 + ${move_x_hankaku}, 0)
-        endif
+ #        endif
         SetWidth(${width_zenkaku})
         j += 1
     endloop
 
     # 〜
  #    Select(0uff5e); Rotate(10) # ～
+ #    SetWidth(${width_zenkaku})
 
     # ￠ - ￦
     Select(0u00a2);  Copy() # ¢
@@ -2794,6 +2822,7 @@ while (i < \$argc)
  #    Select(0uff3f); Copy() # ＿
  #    Select(0ufe33); Paste() # ︳
  #    Rotate(-90, 512, 315)
+ #    Move(-13, 0)
  #    SetWidth(${width_zenkaku})
 
 # CJK互換形括弧
@@ -2804,35 +2833,43 @@ while (i < \$argc)
  #        Select(hori[j]); Copy()
  #        Select(vert + j); Paste()
  #        Rotate(-90, 512, 315)
+ #        Move(-20, 0)
  #        SetWidth(${width_zenkaku})
  #        j += 1
  #    endloop
-
+ #
  #    hori = [0uff08, 0uff09, 0uff5b, 0uff5d,\
  #            0u3014, 0u3015, 0u3010, 0u3011,\
  #            0u300a, 0u300b, 0u3008, 0u3009,\
  #            0u300c, 0u300d, 0u300e, 0u300f] # （）｛｝ 〔〕【】 《》〈〉 「」『』
-    hori = [0uff08, 0uff09, 0uff5b, 0uff5d] # （）｛｝
-    vert = 0ufe35 # ︵
-    j = 0
-    while (j < SizeOf(hori))
-        Select(hori[j]); Copy()
-        Select(vert + j); Paste()
-        Rotate(-90, 512, 315)
-        SetWidth(${width_zenkaku})
-        j += 1
-    endloop
-
-    hori = [0uff3b, 0uff3d] # ［］
-    vert = 0ufe47 # ﹇
-    j = 0
-    while (j < SizeOf(hori))
-        Select(hori[j]); Copy()
-        Select(vert + j); Paste()
-        Rotate(-90, 512, 315)
-        SetWidth(${width_zenkaku})
-        j += 1
-    endloop
+ #    vert = 0ufe35 # ︵
+ #    j = 0
+ #    while (j < SizeOf(hori))
+ #        Select(hori[j]); Copy()
+ #        Select(vert + j); Paste()
+ #        Rotate(-90, 512, 315)
+ #        if (hori[j] == 0uff08 || hori[j] == 0uff09) # （）
+ #            Move(-9, 0)
+ #        elseif (hori[j] == 0uff5b || hori[j] == 0uff5d) # ｛｝
+ #            Move(3, 0)
+ #        else
+ #            Move(-20, 0)
+ #        endif
+ #        SetWidth(${width_zenkaku})
+ #        j += 1
+ #    endloop
+ #
+ #    hori = [0uff3b, 0uff3d] # ［］
+ #    vert = 0ufe47 # ﹇
+ #    j = 0
+ #    while (j < SizeOf(hori))
+ #        Select(hori[j]); Copy()
+ #        Select(vert + j); Paste()
+ #        Rotate(-90, 512, 315)
+ #        Move(2, 0)
+ #        SetWidth(${width_zenkaku})
+ #        j += 1
+ #    endloop
 
 # 縦書き用全角形他 (vertフィーチャ用)
     Print("Edit vert glyphs")
@@ -2840,37 +2877,47 @@ while (i < \$argc)
     hori = [0uff08, 0uff09, 0uff0c, 0uff0e,\
             0uff1a, 0uff1d, 0uff3b, 0uff3d,\
             0uff3f, 0uff5b, 0uff5c, 0uff5d,\
-            0uff5e, 0uffe3] # （），． ：＝［］ ＿｛｜｝ ～￣
+            0uff5e, 0uffe3, 0uff0d, 0uff1b,\
+            0uff1c, 0uff1e, 0uff5f, 0uff60] # （），． ：＝［］ ＿｛｜｝ ～￣－； ＜＞｟｠
     vert = ${address_vert_start}
     j = 0
     while (j < SizeOf(hori))
-        if (hori[j] != 0uff0c && hori[j] != 0uff0e \
-         && hori[j] != 0uff3f && hori[j] != 0uff5e && hori[j] != 0uffe3) # ，．＿～￣
+        if (hori[j] != 0uff0c && hori[j] != 0uff0e\
+         && hori[j] != 0uff08 && hori[j] != 0uff09\
+         && hori[j] != 0uff5b && hori[j] != 0uff5d\
+         && hori[j] != 0uff3b && hori[j] != 0uff3d\
+         && hori[j] != 0uff5f && hori[j] != 0uff60\
+         && hori[j] != 0uff3f\
+         && hori[j] != 0uffe3\
+         && hori[j] != 0uff5e) # ，． （） ｛｝ ［］ ｟｠ ＿ ￣ ～
             Select(hori[j]); Copy()
             Select(vert + j); Paste()
             if (hori[j] == 0uff0c || hori[j] == 0uff0e) # ， ．
-                Move(594 - ${move_x_hankaku}, 546)
+                Move(542, 597)
             else
                 Rotate(-90, 512, 315)
+                if (hori[j] == 0uff08 || hori[j] == 0uff09) # （）
+                    Move(-9, 0)
+                elseif (hori[j] == 0uff5b || hori[j] == 0uff5d) # ｛｝
+                    Move(3, 0)
+                elseif (hori[j] == 0uff3b || hori[j] == 0uff3d) # ［］
+                    Move(2, 0)
+                elseif (hori[j] == 0uff5f || hori[j] == 0uff60) # ｟｠
+                    Move(-20, 0)
+                elseif (hori[j] == 0uff3f) # ＿
+                    Move(-13, 0)
+                elseif (hori[j] == 0uffe3) # ￣
+                    Move(13 + 90 - ${move_y_zenkaku_underbar}, 0)
+                elseif (hori[j] == 0uff5e) # ～
+                    Move(13, 0)
+                elseif (hori[j] == 0uff1a || hori[j] == 0uff1b) # ：；
+                    Move(${move_x_vert_colon}, 0)
+                elseif (hori[j] == 0uff5c) # ｜
+                    Move(${move_x_vert_bar}, 0)
+                else # ＝－＜＞
+                    Move(${move_x_vert_math}, 0)
+                endif
             endif
-            Copy(); Select(${address_store_vert} + k); Paste(); SetWidth(${width_zenkaku}) # 保管所にコピー
-            Select(${address_store_underline} + 2);  Copy() # 縦線追加
-            Select(vert + j); PasteInto()
-            SetWidth(${width_zenkaku})
-        endif
-        j += 1
-        k += 1
-    endloop
-
-    hori = [0uff0d, 0uff1b,\
-            0uff1c, 0uff1e, 0uff5f, 0uff60] # －； ＜＞｟｠
-    vert = vert + j
-    j = 0
-    while (j < SizeOf(hori))
-        if (hori[j] != 0uff5f && hori[j] != 0uff60) # ｟｠
-            Select(hori[j]); Copy()
-            Select(vert + j); Paste()
-            Rotate(-90, 512, 315)
             Copy(); Select(${address_store_vert} + k); Paste(); SetWidth(${width_zenkaku}) # 保管所にコピー
             Select(${address_store_underline} + 2);  Copy() # 縦線追加
             Select(vert + j); PasteInto()
@@ -2910,41 +2957,48 @@ while (i < \$argc)
         if (hori[j] != 0u309b && hori[j] != 0u309c) # ゛゜
             Select(hori[j]); Copy()
             Select(vert + j); Paste()
-            if (j == 2 || j == 3) # ／＼
+            if (hori[j] == 0u309b\
+             || hori[j] == 0u309c) # ゛゜
+                Move(594, -545)
+            elseif (hori[j] == 0uff0f\
+                 || hori[j] == 0uff3c) # ／＼
                 Rotate(-90, 512, 315)
+                Move(${move_x_vert_solidus}, 0)
                 VFlip()
                 CorrectDirection()
+            elseif (hori[j] == 0uffe4) # ￤
+                Move(0, ${move_y_vert_bbar})
             elseif (hori[j] == 0uff46\
-                 || hori[j] == 0uff4c) # ｆｌ
+                  || hori[j] == 0uff4c) # ｆｌ
                 Move(0, ${move_y_vert_1})
             elseif (hori[j] == 0uff42\
-                 || hori[j] == 0uff44\
-                 || hori[j] == 0uff48\
-                 || hori[j] == 0uff4b) # ｂｄｈｋ
+                  || hori[j] == 0uff44\
+                  || hori[j] == 0uff48\
+                  || hori[j] == 0uff4b) # ｂｄｈｋ
                 Move(0, ${move_y_vert_2})
             elseif (hori[j] == 0uff49\
-                 || hori[j] == 0uff54) # ｉｔ
+                  || hori[j] == 0uff54) # ｉｔ
                 Move(0, ${move_y_vert_3})
             elseif (hori[j] == 0uff41\
-                 || hori[j] == 0uff43\
-                 || hori[j] == 0uff45\
-                 || hori[j] == 0uff4d\
-                 || hori[j] == 0uff4e\
-                 || hori[j] == 0uff4f\
-                 || hori[j] == 0uff52\
-                 || hori[j] == 0uff53\
-                 || hori[j] == 0uff55\
-                 || hori[j] == 0uff56\
-                 || hori[j] == 0uff57\
-                 || hori[j] == 0uff58\
-                 || hori[j] == 0uff5a\
-                 || hori[j] == 0uffe0) # ａｃｅｍｎｏｒｓｕｖｗｘｚ￠
+                  || hori[j] == 0uff43\
+                  || hori[j] == 0uff45\
+                  || hori[j] == 0uff4d\
+                  || hori[j] == 0uff4e\
+                  || hori[j] == 0uff4f\
+                  || hori[j] == 0uff52\
+                  || hori[j] == 0uff53\
+                  || hori[j] == 0uff55\
+                  || hori[j] == 0uff56\
+                  || hori[j] == 0uff57\
+                  || hori[j] == 0uff58\
+                  || hori[j] == 0uff5a\
+                  || hori[j] == 0uffe0) # ａｃｅｍｎｏｒｓｕｖｗｘｚ￠
                 Move(0, ${move_y_vert_4})
             elseif (hori[j] == 0uff4a) # ｊ
                 Move(0, ${move_y_vert_5})
             elseif (hori[j] == 0uff50\
-                 || hori[j] == 0uff51\
-                 || hori[j] == 0uff59) # ｐｑｙ
+                  || hori[j] == 0uff51\
+                  || hori[j] == 0uff59) # ｐｑｙ
                 Move(0, ${move_y_vert_6})
             elseif (hori[j] == 0uff47) # ｇ
                 Move(0, ${move_y_vert_7})
@@ -2962,6 +3016,7 @@ while (i < \$argc)
  #    Select(0u2702); Copy() # ✂
  #    Select(vert); Paste()
  #    Rotate(-90, 512, 315)
+ #    Move(-16, 0)
  #    SetWidth(${width_zenkaku})
  #    j = 1
 
@@ -2973,7 +3028,7 @@ while (i < \$argc)
  #        Select(vert + j); Paste()
  #        if (j == 0) # ‖
  #            Rotate(-90, 512, 315)
- #            Move(0, -256)
+ #            Move(-21, -256)
  #            SetWidth(${width_zenkaku})
  #        else # 〰゠
  #            Rotate(-90, 512, 315)
@@ -3087,6 +3142,7 @@ while (i < \$argc)
     Select(${address_store_vert} + 10); Paste() # 縦書き
     Move(256 - ${move_x_hankaku}, 0)
     Rotate(-90, 512, 315)
+    Move(${move_x_vert_bar}, 0)
     SetWidth(${width_zenkaku})
 
  #    Select(${address_store_vert} + 200); Paste() # 全角縦棒を破線にする場合有効にする
@@ -5615,51 +5671,97 @@ _EOT_
 if [ "${patch_only_flag}" = "false" ]; then
     rm -f ${font_familyname}*.ttf
 
-    # カスタムフォント生成
-    $fontforge_command -script ${tmpdir}/${modified_latin_generator} \
-        2> $redirection_stderr || exit 4
-    $fontforge_command -script ${tmpdir}/${custom_font_generator} \
-        2> $redirection_stderr || exit 4
+    # 下書きモード以外で font_generator に変更が無く、すでにパッチ前フォントが作成されていた場合それを呼び出す
+    if [ "${draft_flag}" = "false" ]; then
+        output_data=$(echo $(wc -c font_generator.sh) | cut -d ' ' -f 1)"-"$(date -r font_generator.sh "+%Y%m%d-%H%M%S")
+        output_data=${output_data}"_"$(echo $(wc -c "${settings}.txt") | cut -d ' ' -f 1)"-"$(date -r "${settings}.txt" "+%Y%m%d-%H%M%S")
+        if [ "${nerd_flag}" = "false" ]; then
+            nopatchsetdir_name="e"
+        fi
+        if [ "${oblique_flag}" = "false" ]; then
+            nopatchsetdir_name="${nopatchsetdir_name}o"
+        fi
+        if [ "${loose_flag}" != "false" ]; then
+            nopatchsetdir_name="${nopatchsetdir_name}w"
+        fi
+        nopatchsetdir_name="${font_familyname}${font_familyname_suffix}_${nopatchsetdir_name}"
+        file_data_txt=$(find "./${nopatchdir_name}/${nopatchsetdir_name}" -maxdepth 1 -name "${fileDataName}.txt" | head -n 1)
+        if [ -n "${file_data_txt}" ]; then
+            input_data=$(head -n 1 "${nopatchdir_name}/${nopatchsetdir_name}/${fileDataName}.txt")
+            if [ "${input_data}" = "${output_data}" ]; then
+                echo "font_generator and settings file are unchanged"
+                echo "Use saved nopatch fonts"
+                cp -f ${nopatchdir_name}/${nopatchsetdir_name}/${font_familyname}${font_familyname_suffix}-*.nopatch.ttf "."
+                compose_flag="false"
+                echo
+            fi
+        fi
+    fi
 
-    # Nerd fonts追加
-    if [ "${nerd_flag}" = "true" ]; then
-        $fontforge_command -script ${tmpdir}/${modified_nerd_generator} \
+    # 下書きモードかパッチ前フォントが作成されていなかった場合フォントを合成し直す
+    if [ "${compose_flag}" = "true" ]; then
+        if [ "${draft_flag}" = "false" ]; then
+            echo "font_generator settings are changed or nopatch fonts not exist"
+            echo "Make new nopatch fonts"
+            echo
+        fi
+
+        # カスタムフォント生成
+        $fontforge_command -script ${tmpdir}/${modified_latin_generator} \
             2> $redirection_stderr || exit 4
-        $fontforge_command -script ${tmpdir}/${merged_nerd_generator} \
+        $fontforge_command -script ${tmpdir}/${custom_font_generator} \
+            2> $redirection_stderr || exit 4
+
+        # Nerd fonts追加
+        if [ "${nerd_flag}" = "true" ]; then
+            $fontforge_command -script ${tmpdir}/${modified_nerd_generator} \
+                2> $redirection_stderr || exit 4
+            $fontforge_command -script ${tmpdir}/${merged_nerd_generator} \
+                ${font_familyname}${font_familyname_suffix}-Regular.ttf \
+                2> $redirection_stderr || exit 4
+            $fontforge_command -script ${tmpdir}/${merged_nerd_generator} \
+                ${font_familyname}${font_familyname_suffix}-Bold.ttf \
+                2> $redirection_stderr || exit 4
+        fi
+
+        # パラメータ調整
+        $fontforge_command -script ${tmpdir}/${parameter_modificator} \
             ${font_familyname}${font_familyname_suffix}-Regular.ttf \
             2> $redirection_stderr || exit 4
-        $fontforge_command -script ${tmpdir}/${merged_nerd_generator} \
+        $fontforge_command -script ${tmpdir}/${parameter_modificator} \
             ${font_familyname}${font_familyname_suffix}-Bold.ttf \
             2> $redirection_stderr || exit 4
+
+        # オブリーク作成
+        if [ "${oblique_flag}" = "true" ]; then
+        $fontforge_command -script ${tmpdir}/${oblique_converter} \
+            ${font_familyname}${font_familyname_suffix}-Regular.ttf \
+            2> $redirection_stderr || exit 4
+        $fontforge_command -script ${tmpdir}/${oblique_converter} \
+            ${font_familyname}${font_familyname_suffix}-Bold.ttf \
+            2> $redirection_stderr || exit 4
+        fi
+
+        # ファイル名を変更
+        find . -maxdepth 1 -not -name "*.*.ttf" | \
+        grep -e "${font_familyname}${font_familyname_suffix}-.*\.ttf$" | while read line
+        do
+            style_ttf=${line#*-}; style=${style_ttf%%.ttf}
+            echo "Rename to ${font_familyname}-${style}.nopatch.ttf"
+            mv "${line}" "${font_familyname}-${style}.nopatch.ttf"
+            echo
+        done
+
+        # 下書きモード以外でフォントを作成した場合、パッチ前フォントと font_generator の情報を保存
+        if [ "${draft_flag}" = "false" ]; then
+            echo "Save nopatch fonts"
+            rm -rf "${nopatchdir_name}/${nopatchsetdir_name}"
+            mkdir -p "${nopatchdir_name}/${nopatchsetdir_name}"
+            printf "${output_data}" > "${nopatchdir_name}/${nopatchsetdir_name}/${fileDataName}.txt"
+            cp -f ${font_familyname}${font_familyname_suffix}-*.nopatch.ttf "${nopatchdir_name}/${nopatchsetdir_name}/."
+            echo
+        fi
     fi
-
-    # パラメータ調整
-    $fontforge_command -script ${tmpdir}/${parameter_modificator} \
-        ${font_familyname}${font_familyname_suffix}-Regular.ttf \
-        2> $redirection_stderr || exit 4
-    $fontforge_command -script ${tmpdir}/${parameter_modificator} \
-        ${font_familyname}${font_familyname_suffix}-Bold.ttf \
-        2> $redirection_stderr || exit 4
-
-    # オブリーク作成
-    if [ "${oblique_flag}" = "true" ]; then
-    $fontforge_command -script ${tmpdir}/${oblique_converter} \
-        ${font_familyname}${font_familyname_suffix}-Regular.ttf \
-        2> $redirection_stderr || exit 4
-    $fontforge_command -script ${tmpdir}/${oblique_converter} \
-        ${font_familyname}${font_familyname_suffix}-Bold.ttf \
-        2> $redirection_stderr || exit 4
-    fi
-
-    # ファイル名を変更
-    find . -maxdepth 1 -not -name "*.*.ttf" | \
-    grep -e "${font_familyname}${font_familyname_suffix}-.*\.ttf$" | while read line
-    do
-        style_ttf=${line#*-}; style=${style_ttf%%.ttf}
-        echo "Rename to ${font_familyname}-${style}.nopatch.ttf"
-        mv "${line}" "${font_familyname}-${style}.nopatch.ttf"
-    done
-    echo
 fi
 
 # パッチ適用
