@@ -1011,6 +1011,20 @@ while (i < SizeOf(input_list))
     Move(-20, 0)
     SetWidth(${width_latin})
 
+# j (右に少し移動)
+    # ラテン文字
+    Select(0u006a) # j
+    SelectMore(0u0135) # ĵ
+ #    SelectMore(0u01f0) # ǰ
+ #    SelectMore(0u0249) # ɉ
+    SelectMore(0u029d) # ʝ
+    # ギリシア文字
+ #    SelectMore(0u03f3) # ϳ
+    # キリル文字
+    SelectMore(0u0458) # ј
+    Move(20, 0)
+    SetWidth(${width_latin})
+
 # r (右に少し移動)
     Select(0u0072) # r
     SelectMore(0u0155) # ŕ
