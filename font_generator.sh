@@ -3057,8 +3057,13 @@ while (i < \$argc)
     j = 0 # ！ - ｠
     while (j < 96)
         l = 0uff01 + j
-        if (l != 0uff0c && l != 0uff0e \
-         && l != 0uff3f && l != 0uff5e && l != 0uff5f && l != 0uff60) # ，．＿～｟｠
+        if (l != 0uff0c && l != 0uff0e\
+         && l != 0uff08 && l != 0uff09\
+         && l != 0uff5b && l != 0uff5d\
+         && l != 0uff3b && l != 0uff3d\
+         && l != 0uff5f && l != 0uff60\
+         && l != 0uff3f\
+         && l != 0uff5e) # ，． （） ｛｝ ［］ ｟｠ ＿ ～
             Select(l)
             Copy(); Select(${address_store_vert} + k); Paste(); SetWidth(${width_zenkaku}) # 保管所にコピー
             Select(${address_store_underline}); Copy() # 下線追加
