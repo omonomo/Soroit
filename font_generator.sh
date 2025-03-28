@@ -49,7 +49,7 @@ address_store_vert=$((address_store_arrow + 4)) # 保管した縦書きアドレ
 address_store_zenhan=$((address_store_vert + 109)) # 保管した全角半角アドレス(！゠⁉)
 address_store_d_hyphen=$((address_store_zenhan + 172)) # 保管した縦書き゠アドレス
 address_store_otherspace=$((address_store_d_hyphen + 1)) # 保管したその他のスペースアドレス
-address_store_end=${address_store_otherspace} # 保管したグリフの最終アドレス
+address_store_end=$((address_store_otherspace + 2 - 1)) # 保管したグリフの最終アドレス
 
 address_vert_start="1114181" # 合成後のvert置換の先頭アドレス
 address_vert_bracket=${address_vert_start} # vert置換アドレス （
@@ -81,7 +81,7 @@ address_ss_line=$((address_ss_mod + num_mod_glyphs * 6)) # ss置換の罫線ア�
 address_ss_arrow=$((address_ss_line + 32)) # ss置換の矢印アドレス
 address_ss_zero=$((address_ss_arrow + 4)) # ss置換のスラッシュ無し0アドレス
 address_ss_otherspace=$((address_ss_zero + 10)) # ss置換のその他のスペースアドレス
-address_ss_end=$((address_ss_otherspace + 1 - 1)) # ss置換の最終アドレス
+address_ss_end=$((address_ss_otherspace + 2 - 1)) # ss置換の最終アドレス
 num_ss_glyphs_former=$((address_ss_braille - address_ss_start)) # ss置換のグリフ数(点字の前まで)
 num_ss_glyphs_latter=$((address_ss_end + 1 - address_ss_braille)) # ss置換のグリフ数(点字から後)
 num_ss_glyphs=$((address_ss_end + 1 - address_ss_start)) # ss置換の総グリフ数
@@ -2639,17 +2639,12 @@ while (i < \$argc)
 # スペースの width 変更
     Print("Modified space width")
 
-    Select(0u115f) # hangul choseong filler
-    SelectMore(0u1160) # hangul jungseong filler
-    SelectMore(0u3164) # hangul filler
+    Select(0u2001) # em quad
+    SelectMore(0u2003) # em space
     SetWidth(${width_zenkaku})
 
-    Select(0u00ad) # soft hyphen
-    SelectMore(0u180e) # mongolian vowel separator
-    SelectMore(0u2000) # en quad
-    SelectMore(0u2001) # em quad
+    Select(0u2000) # en quad
     SelectMore(0u2002) # en space
-    SelectMore(0u2003) # em space
     SelectMore(0u2004) # three-per-em space
     SelectMore(0u2005) # four-per-em space
     SelectMore(0u2006) # six-per-em space
@@ -2657,53 +2652,16 @@ while (i < \$argc)
     SelectMore(0u2008) # punctuation space
     SelectMore(0u2009) # thin space
     SelectMore(0u200a) # hair space
-    SelectMore(0u2028) # line separator
-    SelectMore(0u2029) # paragraph separator
     SelectMore(0u202f) # narrow no-break space
     SelectMore(0u205f) # medium mathematical space
-    SelectMore(0u2061) # function application
-    SelectMore(0u2062) # invisible times
-    SelectMore(0u2063) # invisible separator
-    SelectMore(0u2064) # invisible plus
-    SelectMore(0uffa0) # halfwidth hangul filler
-    SelectMore(0ufffc) # object replacement character
-    SelectMore(0u1d159) # musical symbol null notehead
     SetWidth(${width_hankaku})
 
     Select(0u034f) # combining grapheme joiner
-    SelectMore(0u061c) # arabic letter mark
-    SelectMore(0u17b4) # khmer vowel inherent aq
-    SelectMore(0u17b5) # khmer vowel inherent aa
     SelectMore(0u200b) # zero width space
     SelectMore(0u200c) # zero width non-joiner
     SelectMore(0u200d) # zero width joiner
-    SelectMore(0u200e) # left-to-right mark
-    SelectMore(0u200f) # right-to-left mark
-    SelectMore(0u202a) # left-to-right embedding
-    SelectMore(0u202b) # right-to-left embedding
-    SelectMore(0u202c) # pop directional formatting
-    SelectMore(0u202d) # left-to-right override
-    SelectMore(0u202e) # right-to-left override
     SelectMore(0u2060) # word joiner
-    SelectMore(0u2066) # left-to-right isolate
-    SelectMore(0u2067) # right-to-left isolate
-    SelectMore(0u2068) # first strong isolate
-    SelectMore(0u2069) # pop directional isolate
-    SelectMore(0u206a) # inhibit symmetric swapping
-    SelectMore(0u206b) # activate symmetric swapping
-    SelectMore(0u206c) # inhibit arabic form shaping
-    SelectMore(0u206d) # activate arabic form shaping
-    SelectMore(0u206e) # national digit shapes
-    SelectMore(0u206f) # nominal digit shapes
     SelectMore(0ufeff) # zero width no-break space
-    SelectMore(0u1d173) # musical symbol begin beam
-    SelectMore(0u1d174) # musical symbol end beam
-    SelectMore(0u1d175) # musical symbol begin tie
-    SelectMore(0u1d176) # musical symbol end tie
-    SelectMore(0u1d177) # musical symbol begin slur
-    SelectMore(0u1d178) # musical symbol end slur
-    SelectMore(0u1d179) # musical symbol begin phrase
-    SelectMore(0u1d17a) # musical symbol end phrase
     SetWidth(0)
 
 # 記号のグリフを加工
@@ -4366,71 +4324,44 @@ while (i < \$argc)
     lookupName = "'ss" + ToString(ss) + "' スタイルセット" + ToString(ss)
     lookupSub = lookupName + "サブテーブル"
 
-    Select(${address_store_otherspace}); Copy() # その他のスペース
+    Select(${address_store_otherspace}); Copy() # その他の全角スペース
     Select(k); Paste()
 
     spc =[\
-    0u00ad,\
-    0u034f,\
-    0u061c,\
-    0u115f,\
-    0u1160,\
-    0u17b4,\
-    0u17b5,\
-    0u180e,\
-    0u200a,\
-    0u200b,\
-    0u200c,\
-    0u200d,\
-    0u200e,\
-    0u200f,\
-    0u202a,\
-    0u202b,\
-    0u202c,\
-    0u202d,\
-    0u202e,\
-    0u202f,\
-    0u205f,\
-    0u206a,\
-    0u206b,\
-    0u206c,\
-    0u206d,\
-    0u206e,\
-    0u206f,\
-    0u2000,\
     0u2001,\
+    0u2003\
+    ]
+    j = 0
+    while (j < SizeOf(spc))
+        Select(k)
+        glyphName = GlyphInfo("Name")
+        Select(spc[j])
+        AddPosSub(lookupSub, glyphName)
+        j += 1
+    endloop
+    k += 1
+
+    Select(${address_store_otherspace} + 1); Copy() # その他の半角・幅無しスペース
+    Select(k); Paste()
+
+    spc =[\
+    0u034f,\
+    0u2000,\
     0u2002,\
-    0u2003,\
     0u2004,\
     0u2005,\
     0u2006,\
     0u2007,\
     0u2008,\
     0u2009,\
-    0u2028,\
-    0u2029,\
+    0u200a,\
+    0u200b,\
+    0u200c,\
+    0u200d,\
+    0u202f,\
+    0u205f,\
     0u2060,\
-    0u2061,\
-    0u2062,\
-    0u2063,\
-    0u2064,\
-    0u2066,\
-    0u2067,\
-    0u2068,\
-    0u2069,\
-    0u3164,\
-    0ufeff,\
-    0uffa0,\
-    0ufffc,\
-    0u1d159,\
-    0u1d173,\
-    0u1d174,\
-    0u1d175,\
-    0u1d176,\
-    0u1d177,\
-    0u1d178,\
-    0u1d179,\
-    0u1d17a\
+    0ufeff\
     ]
     j = 0
     while (j < SizeOf(spc))
@@ -5046,6 +4977,7 @@ while (i < \$argc)
     SelectFewer(${address_store_vert} + 22, ${address_store_vert} + 23) # 保管した縦書きの縦線無し／＼
     SelectFewer(${address_store_vert} + 102) # 保管した縦書きの縦線無し￤
     SelectFewer(${address_store_d_hyphen}) # 保管した縦書きの゠
+    SelectFewer(${address_store_otherspace}, ${address_store_otherspace} + 1) # 保管したその他のスペース
 
     SelectFewer("uni3008.vert", "uni301F.vert") # 縦書きの括弧、〓
     SelectFewer("uni30FC.vert") # 縦書きのー
@@ -5068,6 +5000,9 @@ while (i < \$argc)
     SelectFewer("uni30A0.vert.ss07") # ss07の縦書きの゠
 
     SelectFewer("SF100000.ss09", "arrowdown.ss09") # ss09の罫線、矢印
+
+    SelectFewer("uni2001.ss11") # ss11の全角スペース
+    SelectFewer("uni034F.ss11") # ss11の半角スペース
 
     Transform(100, 0, ${tan_oblique}, 100, ${move_x_oblique}, 0)
     RemoveOverlap()
