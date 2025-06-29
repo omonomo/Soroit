@@ -67,7 +67,7 @@ address_calt_barD=$((address_calt_figure + 40)) # calt置換アドレス(下に�
 address_calt_hyphenL=$((address_calt_barD + 7)) # calt置換アドレス(左に移動した *)
 address_calt_hyphenR=$((address_calt_hyphenL + 28)) # calt置換アドレス(右に移動した *)
 address_calt_end=$((address_calt_hyphenR + 28 - 1)) # calt置換の最終アドレス (右上に移動した :)
-address_calt_barDLR="24" # calt置換アドレス(左右に移動した * から、左右下に移動した | までの増分)
+address_calt_barDLR="24" # calt置換アドレス(左右に移動した * から、左右に移動した | までの増分)
 
 address_ss_start=$((address_calt_end + 1)) # ss置換の先頭アドレス
 address_ss_space=${address_ss_start} # ss置換アドレス(全角スペース)
@@ -189,7 +189,21 @@ move_y_zenkaku_math="31" # ベースフォントの演算子上下移動量 (Lat
 move_y_calt_separate3="-510" # 3桁区切り表示のY座標
 move_y_calt_separate4="452" # 4桁区切り表示のY座標
 scale_calt_decimal="93" # 小数の拡大率
-
+calt_init() {
+    move_x_calt_colon="0" # : のX座標移動量
+    move_y_calt_colon=$((move_y_math + 82)) # : のY座標移動量
+    move_y_calt_colon=$(bc <<< "scale=0; ${move_y_calt_colon} * ${scale_height_latin} / 100") # : のY座標移動量
+    move_y_calt_colon=$(bc <<< "scale=0; ${move_y_calt_colon} * ${scale_height_hankaku} / 100") # : のY座標移動量
+    move_y_calt_bar=$((move_y_math + 56)) # | のY座標移動量
+    move_y_calt_bar=$(bc <<< "scale=0; ${move_y_calt_bar} * ${scale_height_latin} / 100") # | のY座標移動量
+    move_y_calt_bar=$(bc <<< "scale=0; ${move_y_calt_bar} * ${scale_height_hankaku} / 100") # | のY座標移動量
+    move_y_calt_tilde=$((move_y_math + 0)) # ~ のY座標移動量
+    move_y_calt_tilde=$(bc <<< "scale=0; ${move_y_calt_tilde} * ${scale_height_latin} / 100") # ~ のY座標移動量
+    move_y_calt_tilde=$(bc <<< "scale=0; ${move_y_calt_tilde} * ${scale_height_hankaku} / 100") # ~ のY座標移動量
+    move_y_calt_math=$((- move_y_math - 7)) # +-= のY座標移動量
+    move_y_calt_math=$(bc <<< "scale=0; ${move_y_calt_math} * ${scale_height_latin} / 100") # *+-= のY座標移動量
+    move_y_calt_math=$(bc <<< "scale=0; ${move_y_calt_math} * ${scale_height_hankaku} / 100") # *+-= のY座標移動量
+}
 # 通常版・Loose版共通
 center_height_hankaku="373" # 半角文字Y座標中心
 move_x_calt_separate="-512" # 桁区切り表示のX座標移動量 (下書きモードとその他で位置が変わるので注意)
@@ -569,6 +583,7 @@ do
 done
 echo
 
+calt_init
 shift $(($OPTIND - 1))
 
 # Get input fonts
@@ -679,21 +694,6 @@ else
     trap "echo 'Abnormally terminated'; exit 3" HUP INT QUIT
 fi
 echo
-
-# calt用
-move_x_calt_colon="0" # : のX座標移動量
-move_y_calt_colon=$((move_y_math + 82)) # : のY座標移動量
-move_y_calt_colon=$(bc <<< "scale=0; ${move_y_calt_colon} * ${scale_height_latin} / 100") # : のY座標移動量
-move_y_calt_colon=$(bc <<< "scale=0; ${move_y_calt_colon} * ${scale_height_hankaku} / 100") # : のY座標移動量
-move_y_calt_bar=$((move_y_math + 56)) # | のY座標移動量
-move_y_calt_bar=$(bc <<< "scale=0; ${move_y_calt_bar} * ${scale_height_latin} / 100") # | のY座標移動量
-move_y_calt_bar=$(bc <<< "scale=0; ${move_y_calt_bar} * ${scale_height_hankaku} / 100") # | のY座標移動量
-move_y_calt_tilde=$((move_y_math + 0)) # ~ のY座標移動量
-move_y_calt_tilde=$(bc <<< "scale=0; ${move_y_calt_tilde} * ${scale_height_latin} / 100") # ~ のY座標移動量
-move_y_calt_tilde=$(bc <<< "scale=0; ${move_y_calt_tilde} * ${scale_height_hankaku} / 100") # ~ のY座標移動量
-move_y_calt_math=$((- move_y_math - 7)) # +-= のY座標移動量
-move_y_calt_math=$(bc <<< "scale=0; ${move_y_calt_math} * ${scale_height_latin} / 100") # *+-= のY座標移動量
-move_y_calt_math=$(bc <<< "scale=0; ${move_y_calt_math} * ${scale_height_hankaku} / 100") # *+-= のY座標移動量
 
 # フォントバージョンにビルドNo追加
 buildNo=$(date "+%s")
@@ -5675,8 +5675,8 @@ _EOT_
 if [ "${patch_only_flag}" = "false" ]; then
     rm -f ${font_familyname}*.ttf
 
-    # 下書きモード以外で font_generator に変更が無く、すでにパッチ前フォントが作成されていた場合それを呼び出す
-    if [ "${draft_flag}" = "false" ]; then
+    # 下書きモード、一時作成ファイルを残す以外で font_generator に変更が無く、すでにパッチ前フォントが作成されていた場合それを呼び出す
+    if [ "${draft_flag}" = "false" ] && [ "${leaving_tmp_flag}" = "false" ]; then
         output_data=$(sha256sum font_generator.sh | cut -d ' ' -f 1)
         output_data=${output_data}"_"$(sha256sum font_generator.sh | cut -d ' ' -f 1)
         if [ "${nerd_flag}" = "false" ]; then
@@ -5756,8 +5756,8 @@ if [ "${patch_only_flag}" = "false" ]; then
             echo
         done
 
-        # 下書きモード以外でフォントを作成した場合、パッチ前フォントと font_generator の情報を保存
-        if [ "${draft_flag}" = "false" ]; then
+        # 下書きモード、一時作成ファイルを残す以外でフォントを作成した場合、パッチ前フォントと font_generator の情報を保存
+        if [ "${draft_flag}" = "false" ] && [ "${leaving_tmp_flag}" = "false" ]; then
             echo "Save nopatch fonts"
             rm -rf "${nopatchdir_name}/${nopatchsetdir_name}"
             mkdir -p "${nopatchdir_name}/${nopatchsetdir_name}"
