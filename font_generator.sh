@@ -1768,7 +1768,7 @@ while (i < SizeOf(input_list))
     foreach
         if (WorthOutputting())
             if (GlyphInfo("Width") <= 700)
-                Move(${width_zenkaku} / 2 - ${width_latin} / 2 , 0)
+                Move(${width_zenkaku} / 2 - ${width_latin} / 2, 0)
                 Scale(${scale_hankaku2zenkaku}, ${width_zenkaku} / 2, ${center_height_hankaku})
                 SetWidth(${width_zenkaku})
             endif
