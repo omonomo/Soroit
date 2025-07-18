@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# GSUB calt table maker
+# GSUB calt table maker for Fonts that support ligatures
 #
 # Copyright (c) 2023 omonomo
 #
@@ -33,7 +33,7 @@ fileDataName="fileData" # calt_table_maker のサイズと変更日を保存す�
 
 colonU_clock="1" # 両側数字の場合の : 移動量選択 (1: 演算子の高さに合わせる、2: 括弧の高さに合わせる)
 # lookup の IndexNo. (GSUBを変更すると変わる可能性あり)
-lookupIndex_liga_end="0" # リガチャ用caltの最終lookupナンバー
+lookupIndex_liga_end="77" # リガチャ用caltの最終lookupナンバー
 lookupIndex_calt="18" # caltテーブルのlookupナンバー (リガチャなし)
 num_calt_lookups="20" # calt のルックアップ数
 lookupIndex_init() {
@@ -581,7 +581,7 @@ calt_table_maker_help()
     echo "  -x         Cleaning temporary files" # 一時作成ファイルの消去のみ
     echo "  -X         Cleaning temporary files and saved kerning settings" # 一時作成ファイルとカーニング設定の消去のみ
     echo "  -l         Leave (do NOT remove) temporary files"
- #    echo "  -L         Enable ligatures"
+    echo "  -L         Enable ligatures"
     echo "  -n number  Set glyph number of \"A moved left\""
     echo "  -k         Don't make calt settings for latin characters"
     echo "  -b         Make kerning settings for basic latin characters only"
@@ -596,8 +596,7 @@ echo "- GSUB table [calt, LookupType 6] maker -"
 echo
 
 # Get options
- #while getopts hxXlLn:kbOo OPT
-while getopts hxXln:kbOo OPT
+while getopts hxXlLn:kbOo OPT
 do
     case "${OPT}" in
         "h" )
@@ -623,11 +622,11 @@ do
             echo "Option: Leave (do NOT remove) temporary files"
             leaving_tmp_flag="true"
             ;;
- #        "L" )
- #            echo "Option: Enable ligatures"
- #            liga_flag="true"
- #            lookupIndex_calt=$((lookupIndex_calt + lookupIndex_liga_end)) # caltテーブルのlookupナンバー (リガチャあり)
- #            ;;
+        "L" )
+            echo "Option: Enable ligatures"
+            liga_flag="true"
+            lookupIndex_calt=$((lookupIndex_calt + lookupIndex_liga_end)) # caltテーブルのlookupナンバー (リガチャあり)
+            ;;
         "n" )
             echo "Option: Set glyph number of \"A moved left\": glyph${OPTARG}"
             glyphNo_flag="true"

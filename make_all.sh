@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-# 通常版、Loose 版両方の全バージョンを一度に生成させるプログラム
+# 通常版、Loose 版両方の全バージョンを一度に生成させるプログラム (リガチャ対応)
 
 
 # ログをファイル出力させる場合は有効にする (<< "#LOG" をコメントアウトさせる)
@@ -40,15 +40,15 @@ for i in ${!font_familyname_suffix_def[@]}; do
     ./run_ff_ttx.sh -Fw -N "${font_familyname1}" -n "${font_familyname_suffix_def[${i}]}" ${font_familyname_suffix_def_opt[${i}]}
 done
 
-#./run_ff_ttx.sh -FL -N "${font_familyname0}" -n "LG" S
-#for i in ${!font_familyname_suffix_def[@]}; do
-#    ./run_ff_ttx.sh -FL -N "${font_familyname0}" -n "${font_familyname_suffix_def[${i}]}LG" ${font_familyname_suffix_def_opt[${i}]}
-#done
-#
-#./run_ff_ttx.sh -FwL -N "${font_familyname1}" -n "LG" S
-#for i in ${!font_familyname_suffix_def[@]}; do
-#    ./run_ff_ttx.sh -FwL -N "${font_familyname1}" -n "${font_familyname_suffix_def[${i}]}LG" ${font_familyname_suffix_def_opt[${i}]}
-#done
+./run_ff_ttx.sh -FL -N "${font_familyname0}" -n "LG" S
+for i in ${!font_familyname_suffix_def[@]}; do
+    ./run_ff_ttx.sh -FL -N "${font_familyname0}" -n "${font_familyname_suffix_def[${i}]}LG" ${font_familyname_suffix_def_opt[${i}]}
+done
+
+./run_ff_ttx.sh -FwL -N "${font_familyname1}" -n "LG" S
+for i in ${!font_familyname_suffix_def[@]}; do
+    ./run_ff_ttx.sh -FwL -N "${font_familyname1}" -n "${font_familyname_suffix_def[${i}]}LG" ${font_familyname_suffix_def_opt[${i}]}
+done
 
 echo
 echo "Succeeded in generating all custom fonts!"

@@ -17,8 +17,8 @@ exec 2> >(tee -a $LOG_ERR)
 
 font_familyname="Soroit"
 
-lookupIndex_liga_end="0" # リガチャ用calt+単純置換の最終lookupナンバー
-lookupIndex_liga_calt_end="0" # リガチャ用caltの最終lookupナンバー
+lookupIndex_liga_end="77" # リガチャ用calt+単純置換の最終lookupナンバー
+lookupIndex_liga_calt_end="42" # リガチャ用caltの最終lookupナンバー
 lookupIndex_liga2calt="17" # リガチャ用calt+単純置換の最終からcaltの一つ前までのlookupナンバー加算値
 lookupIndex_calt_normal="18" # caltテーブルのlookupナンバー (リガチャなし)
 num_calt_lookups="20" # caltのルックアップ数 (calt_table_makerでlookupを変更した場合、それに合わせる)

@@ -4,7 +4,7 @@ Copyright (c) 2024 omonomo ([https://omonomo.github.io/Soroit/](https://omonomo.
 
 ## 簡単な説明
 
-自作合成フォント [Cyroit](https://omonomo.github.io/Cyroit/) に [Source Code Pro](https://adobe-fonts.github.io/source-code-pro/) を合成しました。
+自作合成フォント [Cyroit](https://omonomo.github.io/Cyroit/) に [Source Code Pro](https://adobe-fonts.github.io/source-code-pro/) と [Hasklig](https://github.com/i-tu/Hasklig) を合成しました。
 
 ## 収録フォントの主な違い
 
@@ -33,6 +33,8 @@ Copyright (c) 2024 omonomo ([https://omonomo.github.io/Soroit/](https://omonomo.
 **FX**: 文字間隔固定版  
 **HB**: 平凡版
 
+※ LG 付きはリガチャ対応
+
 ## 素材にさせていただいたフォントからの変更内容
 
 - em 値やラインギャップの変更
@@ -50,6 +52,11 @@ Copyright (c) 2024 omonomo ([https://omonomo.github.io/Soroit/](https://omonomo.
 © 2023 Adobe  
 ([https://adobe-fonts.github.io/source-code-pro/](https://adobe-fonts.github.io/source-code-pro/))  
 主にラテン文字、ギリシア文字、キリル文字で使用しています。Source Code Pro のライセンスは [SIL Open Font License v1.1](https://fonts.google.com/specimen/Source+Code+Pro/license) です。
+
+[Hasklig (v1.2)]  
+Original idea, design and implementation of code ligatures by Ian Tuomi 2014-2015.  
+([https://github.com/i-tu/Hasklig](https://github.com/i-tu/Hasklig))  
+コーディング用リガチャで使用しています。Hasklig のライセンスは [SIL Open Font License v1.1](https://github.com/i-tu/Hasklig/blob/main/LICENSE.md) です。
 
 [Inconsolata (Version 3.001)]  
 Copyright 2006 The Inconsolata Project Authors  

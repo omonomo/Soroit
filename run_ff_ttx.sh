@@ -113,7 +113,7 @@ forge_ttx_help()
     echo "  -N string  Set fontfamily (\"string\")"
     echo "  -n string  Set fontfamily suffix (\"string\")"
     echo "  -w         Set the ratio of hankaku to zenkaku characters to 9:16"
- #    echo "  -L         Enable ligatures"
+    echo "  -L         Enable ligatures"
     echo "  -k         Don't make calt settings for latin characters"
     echo "  -r         Reuse an existing list"
     echo "  -d         Draft mode (skip time-consuming processes)" # グリフ変更の確認用 (最後は通常モードで確認すること)
@@ -139,8 +139,7 @@ echo "*** FontForge and TTX runner ***"
 echo
 
 # オプションを取得
- #while getopts hxXlN:n:wLkrdCpF OPT
-while getopts hxXlN:n:wkrdCpF OPT
+while getopts hxXlN:n:wLkrdCpF OPT
 do
     case "${OPT}" in
         "h" )
@@ -177,10 +176,10 @@ do
             echo "Option: Set the ratio of hankaku to zenkaku characters to 9:16"
             loose_flag="true"
             ;;
- #        "L" )
- #            echo "Option: Enable ligatures"
- #            liga_flag="true"
- #            ;;
+        "L" )
+            echo "Option: Enable ligatures"
+            liga_flag="true"
+            ;;
         "k" )
             echo "Option: Don't make calt settings for latin characters"
             symbol_only_flag="true"

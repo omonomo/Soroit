@@ -5,7 +5,7 @@
 # コメントの前に # を入れていますが、形式的に入れているだけで # から後がコメントというわけではありません。
 
 # フォントのバージョン
-FONT_VERSION=1.2.2
+FONT_VERSION=1.3.0
 
 # フォント名
 FONT_FAMILYNAME=Soroit
@@ -17,6 +17,7 @@ VENDOR_ID=PfEd
 # 著作権
 COPYRIGHT=Copyright (c) 2024 omonomo
 COPYRIGHT=[Source Code Pro]\n© 2023 Adobe (http://www.adobe.com/)
+COPYRIGHT=[Hasklig]\nIan Tuomi 2014-2015.
 COPYRIGHT=[Inconsolata]\nCopyright 2006 The Inconsolata Project Authors (https://github.com/cyrealtype/Inconsolata)
 COPYRIGHT=[Circle M+]\nCopyright(c) 2020 M+ FONTS PROJECT, itouhiro
 COPYRIGHT=[BIZ UDGothic]\nCopyright 2022 The BIZ UDGothic Project Authors (https://github.com/googlefonts/morisawa-biz-ud-gothic)
