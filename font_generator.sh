@@ -918,8 +918,24 @@ while (i < SizeOf(input_list))
  #    SetWidth(${width_latin})
 
     Print("Edit numbers")
-# 1 (.a のグリフに置換)
- #    Select("one.a"); Copy();         Select("one"); Paste(); SetWidth(${width_latin})
+# 1 (.a のグリフを加工して置換)
+    Select("one.a"); Copy()
+    Select("one");   Paste()
+    Select(0u2588);  Copy() # Full block
+    Select(65552);   Paste() # Temporary glyph
+    if (input_list[i] == "${input_latin_regular}")
+        Rotate(41); Move(10, 442)
+        PasteWithOffset(0, -590)
+    else
+        Rotate(42); Move(20, 370)
+        PasteWithOffset(0, -650)
+    endif
+    RemoveOverlap()
+    Copy()
+    Select(0u0031); PasteInto()
+    OverlapIntersect()
+    SetWidth(${width_latin})
+    Select(65552); Clear() # Temporary glyph
 
     Print("Edit alphabets")
 # g (.a のグリフに置換)
