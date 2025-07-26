@@ -49,7 +49,8 @@ address_store_vert=$((address_store_arrow + 4)) # 保管した縦書きアドレ
 address_store_zenhan=$((address_store_vert + 109)) # 保管した全角半角アドレス(！゠⁉)
 address_store_d_hyphen=$((address_store_zenhan + 172)) # 保管した縦書き゠アドレス
 address_store_otherspace=$((address_store_d_hyphen + 1)) # 保管したその他のスペースアドレス
-address_store_end=$((address_store_otherspace + 2 - 1)) # 保管したグリフの最終アドレス
+address_store_liga=$((address_store_otherspace + 2)) # 保管したリガチャアドレス
+address_store_end=$((address_store_liga + 2 - 1)) # 保管したグリフの最終アドレス
 
 address_vert_start="1114181" # 合成後のvert置換の先頭アドレス (リガチャなし)
 lookupIndex_liga_end="0" # リガチャ用caltの最終lookupナンバー (リガチャなし)
@@ -87,7 +88,8 @@ address_init() {
     address_ss_arrow=$((address_ss_line + 32)) # ss置換の矢印アドレス
     address_ss_zero=$((address_ss_arrow + 4)) # ss置換のスラッシュ無し0アドレス
     address_ss_otherspace=$((address_ss_zero + 10)) # ss置換のその他のスペースアドレス
-    address_ss_end=$((address_ss_otherspace + 2 - 1)) # ss置換の最終アドレス
+    address_ss_liga=$((address_ss_otherspace + 2)) # ss置換のリガチャアドレス
+    address_ss_end=$((address_ss_liga + 2 - 1)) # ss置換の最終アドレス
     num_ss_glyphs_former=$((address_ss_braille - address_ss_start)) # ss置換のグリフ数(点字の前まで)
     num_ss_glyphs_latter=$((address_ss_end + 1 - address_ss_braille)) # ss置換のグリフ数(点字から後)
     num_ss_glyphs=$((address_ss_end + 1 - address_ss_start)) # ss置換の総グリフ数
@@ -1475,17 +1477,27 @@ while (i < SizeOf(input_list))
     OverlapIntersect()
     SetWidth(${width_latin})
 
-    # リガチャも高さを統一
+    # リガチャ対応
     if ("${liga_flag}" == "true")
-        Select(${address_store_visi_latin} + 1); Copy() # 保管所
-        Select(65552); Paste() # Temporary glyph
-        Scale(1000, 100)
-        Copy()
-        Select(0ue104)
-        PasteWithOffset(-300, 0)
+        # 破線無しを保管して加工
+        Select(0ue104); Move(0, 26) # ||
+        Copy() # |
+        Select(${address_store_liga}); Paste() # 保管所
+        Move(0, 75)
+        PasteWithOffset(0, -75)
         OverlapIntersect()
         SetWidth(${width_latin})
-        Select(65552); Clear() # Temporary glyph
+
+        # ||
+        Select(0ue104); Copy() # ||
+        Move(0, 535)
+        PasteWithOffset(0, -535)
+
+        # 保管したグリフを利用して高さを統一
+        Select(${address_store_liga}); Copy() # 保管所
+        Select(0ue104); PasteInto() # ||
+        OverlapIntersect()
+        SetWidth(${width_latin})
     endif
 
 # 上付き、下付き文字を追加、sups、subs フィーチャを追加
@@ -1951,6 +1963,7 @@ while (i < SizeOf(input_list))
  #        SelectMore(0u1d538, 0u1d56b) # 数学用英数字記号
         if ("${liga_flag}" == "true")
             SelectMore(0ue100, 0ue129) # リガチャ
+            SelectMore(${address_store_liga}, ${address_store_liga} + 1)
             SelectMore("LIG")
         endif
         foreach
@@ -2037,6 +2050,7 @@ while (i < SizeOf(input_list))
  #        SelectMore(0u1d538, 0u1d56b) # 数学用英数字記号
         if ("${liga_flag}" == "true")
             SelectMore(0ue100, 0ue129) # リガチャ
+            SelectMore(${address_store_liga}, ${address_store_liga} + 1)
             SelectMore("LIG")
         endif
         foreach
@@ -4330,6 +4344,16 @@ while (i < \$argc)
     AddPosSub(lookupSub, glyphName)
     k += 1
 
+    if ("${liga_flag}" == "true")
+        Select(${address_store_liga}); Copy() # ||
+        Select(k); Paste()
+        SetWidth(${width_hankaku})
+        glyphName = GlyphInfo("Name")
+        Select(0ue104)
+        AddPosSub(lookupSub, glyphName)
+        k += 1
+    endif
+
     ss += 1
 # ss08 DQVZ
     lookupName = "'ss0" + ToString(ss) + "' スタイルセット" + ToString(ss)
@@ -5600,6 +5624,12 @@ while (i < \$argc)
         Select(${address_store_d_hyphen}); Copy() # 縦書き゠
         Select(${address_vert_dh}); Paste()
         SetWidth(${width_zenkaku})
+
+        if ("${liga_flag}" == "true")
+            Select(${address_store_liga}); Copy() # ||
+            Select(0ue104); Paste()
+            SetWidth(${width_hankaku})
+        endif
     endif
 
 # DQVZのクロスバー等消去
