@@ -54,7 +54,7 @@ Copyright (c) 2024 omonomo ([https://omonomo.github.io/Soroit/](https://omonomo.
 主にラテン文字、ギリシア文字、キリル文字で使用しています。Source Code Pro のライセンスは [SIL Open Font License v1.1](https://fonts.google.com/specimen/Source+Code+Pro/license) です。
 
 [Hasklig (v1.2)]  
-Original idea, design and implementation of code ligatures by Ian Tuomi 2014-2015.  
+Original idea, design and implementation of code ligatures by Ian Tuomi 2014-2015. This typeface extends Source Code Pro with ligatures.  
 ([https://github.com/i-tu/Hasklig](https://github.com/i-tu/Hasklig))  
 コーディング用リガチャで使用しています。Hasklig のライセンスは [SIL Open Font License v1.1](https://github.com/i-tu/Hasklig/blob/main/LICENSE.md) です。
 
