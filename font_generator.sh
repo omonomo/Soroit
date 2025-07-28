@@ -5243,6 +5243,9 @@ while (i < \$argc)
     if ("${nerd_flag}" == "true")
         SelectFewer(0ue000, 0uf8ff) # NerdFonts
         SelectFewer(0uf0001, 0uf1af0) # NerdFonts
+        if ("${liga_flag}" == "true")
+            SelectMore(0ue100, 0ue129) # リガチャは斜体にする
+        endif
     endif
 
     SelectFewer(${address_store_underline}, ${address_store_underline} + 2) # 保管した下線
