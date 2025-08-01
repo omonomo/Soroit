@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Table modificator
+# Table modificator for Soroit
 #
 # Copyright (c) 2023 omonomo
 #
@@ -17,6 +17,7 @@ exec 2> >(tee -a $LOG_ERR)
 
 font_familyname="Soroit"
 
+ligaPatch="ligaPatch" # Haskligのリガチャ修正パッチ名
 lookupIndex_liga_end="77" # リガチャ用calt+単純置換の最終lookupナンバー
 lookupIndex_liga_calt_end="42" # リガチャ用caltの最終lookupナンバー
 lookupIndex_liga2calt="17" # リガチャ用calt+単純置換の最終からcaltの一つ前までのlookupナンバー加算値
@@ -114,6 +115,7 @@ remove_temp() {
   rm -f ${cmapList}.txt
   rm -f ${extList}.txt
   rm -f ${gsubList}.txt
+  rm -f ${ligaPatch}.txt
 }
 
 table_modificator_help()
@@ -375,6 +377,41 @@ if [ "${gsub_flag}" = "true" ]; then # caltListを作り直す場合は今ある
     else
       liga_flag="false"
       lookupIndex_calt=${lookupIndex_calt_normal} # caltテーブルのlookupナンバー
+    fi
+
+    # Soroit 専用 (リガチャの挙動修正)
+    if [ "${liga_flag}" = "true" ]; then
+      cat > ${ligaPatch}.txt << _EOT_
+        <LookupType value="6"/>
+        <LookupFlag value="0"/>
+
+        <ChainContextSubst index="0" Format="3">
+          <InputCoverage index="0">
+            <Glyph value="bar"/>
+          </InputCoverage>
+          <LookAheadCoverage index="0">
+            <Glyph value="bar"/>
+          </LookAheadCoverage>
+          <LookAheadCoverage index="1">
+            <Glyph value="greater"/>
+          </LookAheadCoverage>
+        </ChainContextSubst>
+
+        <ChainContextSubst index="0" Format="3">
+          <BacktrackCoverage index="0">
+            <Glyph value="less"/>
+          </BacktrackCoverage>
+          <InputCoverage index="0">
+            <Glyph value="bar"/>
+          </InputCoverage>
+          <LookAheadCoverage index="0">
+            <Glyph value="bar"/>
+          </LookAheadCoverage>
+        </ChainContextSubst>
+_EOT_
+      sed -i.bak -e "/Lookup index=\"40\"/{n;d;}" "${P%%.ttf}.ttx"
+      sed -i.bak -e "/Lookup index=\"40\"/{n;d;}" "${P%%.ttf}.ttx"
+      sed -i.bak -e "/Lookup index=\"40\"/r ${ligaPatch}.txt" "${P%%.ttf}.ttx" # リガチャ用caltテーブルの先頭に挿入
     fi
 
     # GSUB (用字、言語全て共通に変更)
