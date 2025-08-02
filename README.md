@@ -4,7 +4,7 @@
 
 Soroit (そろいと) はコーディングにもお使いいただける日本語等幅フォントです。  
 自作合成フォント [Cyroit](https://omonomo.github.io/Cyroit/) にプログラミングフォント [Source Code Pro](https://adobe-fonts.github.io/source-code-pro/) と [Hasklig](https://github.com/i-tu/Hasklig) を合成した姉妹フォントになります。  
-Source Code Pro には既に [Source Han Code JP](https://ccjktype.fonts.adobe.com/2015/06/source-han-code-jp.html) という本家製作の日本語対応フォントがありますが、半角と全角の比率が異なる合成フォントとして形にできないかと思い、製作しました。  
+Source Code Pro には既に [Source Han Code JP](https://ccjktype.fonts.adobe.com/2015/06/source-han-code-jp.html) という本家製作の日本語対応フォントがありますが、半角と全角の比率が異なる合成フォントとして形にできないかと思い、製作しました。
 
 全角英数記号や半角カナ等にアンダーラインが引いてあるため、全角・半角の組み合わせになっている括弧や、誤って使われている全角チルダなどをすぐに見つけることができます。  
 また calt を利用したカーニング機能を実装しており、ラテン文字は等幅のまま前後の文字に合わせて文字間隔を調整します。
