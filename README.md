@@ -3,8 +3,8 @@
 # 全角英数や半角カナが判別しやすい、文字間隔調整機能付き等幅フォント「Soroit」
 
 Soroit (そろいと) はコーディングにもお使いいただける日本語等幅フォントです。  
-自作合成フォント [Cyroit](https://omonomo.github.io/Cyroit/) にプログラミングフォント [Source Code Pro](https://adobe-fonts.github.io/source-code-pro/) を合成した姉妹フォントになります。  
-Source Code Pro には既に [Source Han Code JP](https://ccjktype.fonts.adobe.com/2015/06/source-han-code-jp.html) という本家製作の日本語対応フォントがありますが、半角と全角の比率が異なる合成フォントとして形にできないかと思い、製作しました。
+自作合成フォント [Cyroit](https://omonomo.github.io/Cyroit/) にプログラミングフォント [Source Code Pro](https://adobe-fonts.github.io/source-code-pro/) と [Hasklig](https://github.com/i-tu/Hasklig) を合成した姉妹フォントになります。  
+Source Code Pro には既に [Source Han Code JP](https://ccjktype.fonts.adobe.com/2015/06/source-han-code-jp.html) という本家製作の日本語対応フォントがありますが、半角と全角の比率が異なる合成フォントとして形にできないかと思い、製作しました。  
 
 全角英数記号や半角カナ等にアンダーラインが引いてあるため、全角・半角の組み合わせになっている括弧や、誤って使われている全角チルダなどをすぐに見つけることができます。  
 また calt を利用したカーニング機能を実装しており、ラテン文字は等幅のまま前後の文字に合わせて文字間隔を調整します。
@@ -26,7 +26,7 @@ Source Code Pro には既に [Source Han Code JP](https://ccjktype.fonts.adobe.c
 [egword Universal2](https://www.monokakido.jp/ja/mac/egworduniversal2/) にて  
 <img alt="ScreenShot" src="./images/SS_2.png" width="420">
 
-カーニングサンプル  
+カーニング・リガチャサンプル  
 <img alt="ScreenShot" src="./images/SS_3.gif" width="670">
 
 桁区切り表示サンプル  
@@ -41,13 +41,15 @@ Source Code Pro には既に [Source Han Code JP](https://ccjktype.fonts.adobe.c
 
 ## ダウンロード
 
-最新版 v1.2.2 (2025-07-12)
+最新版 v1.3.0 (2025-08-02)
 
-| リンク                                                                                                      | 説明                                            |
-| ----------------------------------------------------------------------------------------------------------- | ----------------------------------------------- |
-| [フォント (Soroit)](https://github.com/omonomo/Soroit/releases/download/v1.2.2/Soroit_v1.2.2.zip)           | 通常版。半角幅が全角の1/2。                     |
-| [フォント (SoroitLoose)](https://github.com/omonomo/Soroit/releases/download/v1.2.2/SoroitLoose_v1.2.2.zip) | 文字間隔ゆるい版。半角幅が全角の9/16。          |
-| [ソースコード](https://github.com/omonomo/Soroit/archive/refs/tags/v1.2.2.zip)                              | 使用方法は[下の方](#基本的な使い方)にあります。 |
+| リンク                                                                                                          | 説明                                               |
+| --------------------------------------------------------------------------------------------------------------- | -------------------------------------------------- |
+| [フォント (Soroit)](https://github.com/omonomo/Soroit/releases/download/v1.3.0/Soroit_v1.3.0.zip)               | 通常版。半角幅が全角の1/2。                        |
+| [フォント (SoroitLoose)](https://github.com/omonomo/Soroit/releases/download/v1.3.0/SoroitLoose_v1.3.0.zip)     | 文字間隔ゆるい版。半角幅が全角の9/16。             |
+| [フォント (SoroitLG)](https://github.com/omonomo/Soroit/releases/download/v1.3.0/SoroitLG_v1.3.0.zip)           | リガチャ対応版。半角幅が全角の1/2。                |
+| [フォント (SoroitLooseLG)](https://github.com/omonomo/Soroit/releases/download/v1.3.0/SoroitLooseLG_v1.3.0.zip) | リガチャ対応文字間隔ゆるい版。半角幅が全角の9/16。 |
+| [ソースコード](https://github.com/omonomo/Soroit/archive/refs/tags/v1.3.0.zip)                                  | 使用方法は[下の方](#基本的な使い方)にあります。    |
 
 フォントやスクリプトの使用は自己責任にてお願いいたします。  
 各ファイルを使用することで生じた不具合・損害等について omonomo は責任を負いません。  
@@ -59,8 +61,9 @@ Source Code Pro には既に [Source Han Code JP](https://ccjktype.fonts.adobe.c
 - 主に仮名文字のグリフは [Circle M+ 1m](https://itouhiro.github.io/mixfont-mplus-ipa/) を使用しています。
 - 主に漢字のグリフは [BIZ UDゴシック](https://github.com/googlefonts/morisawa-biz-ud-gothic) を使用しています。
 - 主に変体仮名のグリフは [NINJAL 変体仮名フォント](https://cid.ninjal.ac.jp/kana/font/) を使用しています。
+- コーディング用リガチャのグリフは [Hasklig](https://github.com/i-tu/Hasklig) を使用しています。
 - [Nerd Fonts](https://www.nerdfonts.com) を追加しています。
-- [Cyroit](https://omonomo.github.io/Cyroit/) に Source Code Pro を合成したため、[Inconsolata](https://levien.com/type/myfonts/inconsolata.html) 由来のグリフも含まれます。
+- [Cyroit](https://omonomo.github.io/Cyroit/) に Source Code Pro と Hasklig を合成したため、[Inconsolata](https://levien.com/type/myfonts/inconsolata.html) 由来のグリフも含まれます。
 - [ricty_generator](https://rictyfonts.github.io) を Fork したスクリプトで自動生成させています。
 - フォント生成時にグリフの改変や調整、追加を行っています。新規追加分も含め、全てのグリフは素材フォントの組み合わせだけで作られています。
 
@@ -68,7 +71,7 @@ Source Code Pro には既に [Source Han Code JP](https://ccjktype.fonts.adobe.c
 
 - Cyroit のグリフに合わせるために全体的にサイズや縦横比を調整しており、少し縦長になっています。
 - 上付き、下付き文字は少し拡大しています。
-- g、φ、Ŋ は Source Code Pro が持っているサブのグリフを採用しています。
+- 1、g、φ、Ŋ は Source Code Pro が持っているサブのグリフを採用しています。
 - 一部の文字や記号について、グリフ形状の改変や表示座標の微調整を行っています。
 - オブリーク体は新規に生成し直しています。
 
@@ -100,6 +103,7 @@ Source Code Pro には既に [Source Han Code JP](https://ccjktype.fonts.adobe.c
 ### 機能的なものについて
 
 - Cyroit の特長を継承しています。
+- コーディング用リガチャは Hasklig のグリフにのみ対応しています。
 - IVS を利用した漢字の異体字表示に対応しています。
 - ccmp によるアイヌ語カナ表記に対応しています。
 - vert のみですが、縦書き表示に対応しています。
@@ -107,7 +111,6 @@ Source Code Pro には既に [Source Han Code JP](https://ccjktype.fonts.adobe.c
 - 同じく calt を利用して整数に桁区切りマークを表示させています。また桁区切り表示版は小数が少し小さく表示されます。
 - 桁区切りマークは、上の表示が4桁区切り (36桁まで)、下の表示が3桁区切り (39桁まで) です。4桁区切りは0と1が続いた時のみ表示されます。
 - 一部のバージョンに限りますが、各 ss を有効にすることで機能や見た目をカスタマイズすることができます。
-- 記号を置き換えるタイプのリガチャには対応していません。
 - 素材元のフォントにあった GSUB、GPOS のフィーチャは大幅に削ってあります。
 
 ### Loose (文字間隔ゆるい) 版について
@@ -121,12 +124,13 @@ Source Code Pro には既に [Source Han Code JP](https://ccjktype.fonts.adobe.c
 
 見た目が少し違うだけなのに種類を増やしたため、無駄にファイルサイズが大きくなってしまい大変申しわけございません。  
 それぞれにレギュラー、オブリーク、ボールド、ボールドオブリークの書体が含まれています。  
-Loose 版は名称が 「SoroitLoose...」 になります。
+Loose 版は名称が 「SoroitLoose...」 になります。  
+リガチャ対応版は末尾に「LG」が付きます。
 
 | 名称      | サンプル                                                 | 説明                                                                                                                    |
 | --------- | -------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
 | Soroit    | <img alt="Normal" src="./images/Normal.png" width="268"> | 通常版。スタイルセット対応。<br> 内容については後述。                                                                   |
-| Soroit EH | <img alt="Normal" src="./images/EH.png" width="268">     | 絵文字減らした版。スタイルセット対応。別の絵文字フォントとの併用推奨。<br>(サンプルの㊙は Apple Color Emoji のものです) |
+| Soroit EH | <img alt="EH" src="./images/EH.png" width="268">         | 絵文字減らした版。スタイルセット対応。別の絵文字フォントとの併用推奨。<br>(サンプルの㊙は Apple Color Emoji のものです) |
 | Soroit BS | <img alt="BS" src="./images/BS.png" width="268">         | 基本版。<br> 全角スペースを可視化しています。                                                                           |
 | Soroit SP | <img alt="SP" src="./images/SP.png" width="268">         | スペシャルスペース版。<br> 半角スペース、ノーブレークスペースも可視化したバージョン。                                   |
 | Soroit DG | <img alt="DG" src="./images/DG.png" width="268">         | 桁区切り表示版。<br> たくさん並んだ数字とにらめっこする時間を短縮できます。                                             |
@@ -164,14 +168,14 @@ Loose 版は名称が 「SoroitLoose...」 になります。
 
 Soroit は以下の環境でビルドできることを確認しています。
 
-- macOS Sequoia 15.5
-- GNU bash, version 5.3.0(1)-release (aarch64-apple-darwin24.4.0)
+- macOS Sequoia 15.6
+- GNU bash, version 5.3.3(1)-release (aarch64-apple-darwin24.4.0)
 - FontForge 20230101
-- FontTools 4.58.5
+- FontTools 4.59.0
 
 または上記 macOS 上にて
 
-- Docker Desktop 4.43.1 (Engine 28.3.0, Compose v2.38.1-desktop.1)
+- Docker Desktop 4.43.2 (Engine 28.3.2, Compose v2.38.2-desktop.1)
   - Ubuntu 24.04.2 LTS
   - GNU bash, version 5.2.21(1)-release (aarch64-unknown-linux-gnu)
   - FontForge 20230101
@@ -230,6 +234,7 @@ Cyroit の生成スクリプトと使い方は同じです。
   `-N string` フォントファミリー名を _string_ にします。省略すると「Soroit」になります。  
   `-n string` フォントファミリー名の接尾語 (「BS」や「SP」の部分) を _string_ にします。  
   `-w` 生成フォントを Loose 版にします。  
+  `-L` 生成フォントをリガチャ対応版にします。  
   `-k` calt 作成時にカーニング以外の設定 (桁区切り、記号の移動) のみ作成します。  
   &emsp; &emsp; 生成されるフォントは文字間隔を調整しませんが、動作が軽くなります。  
   `-r` cmap や calt 用のテーブルファイルがすでに存在していた場合、作り直さずにそのファイルを使用します。  
@@ -272,6 +277,7 @@ FontForge のスクリプト機能を利用してフォントの合成とグリ�
   `-N string` フォントファミリー名を _string_ にします。省略すると「Soroit」になります。  
   `-n string` フォントファミリー名の接尾語 (「BS」や「SP」の部分) を _string_ にします。  
   `-w` 合成フォントを Loose 版にします。  
+  `-L` 生成フォントをリガチャ対応版にします。`-c` に関係なく有効になります。  
   `-Z` 全角スペースを可視化しません。  
   `-z` 半角スペースを可視化しません。  
   `-u` 全角・半角形に下線を付けません。また点字に外枠を付けません。  
@@ -338,6 +344,7 @@ calt テーブル (前後の文字によってグリフ置換を行う設定) �
   `-x` スクリプトと同じフォルダにある一時作成ファイルの削除のみ行って終了します。  
   `-X` スクリプトと同じフォルダにある一時作成ファイルとキャッシュファイルの削除のみ行って終了します。  
   `-l` 一時作成ファイルを残したままにします。  
+  `-L` リガチャ対応版のカーニング設定を作成します。  
   `-n number` calt で置換する先頭のグリフ (左に動いた A になります) を示す番号に _number_ を指定します。  
   &emsp; &emsp;先に uvs_table_maker を実行し、`gsubList.txt` が生成されていれば省略しても問題ありません。  
   `-k` カーニング以外の設定 (桁区切り、記号の移動) のみ作成します。  
