@@ -4,7 +4,7 @@
 
 Soroit (そろいと) はコーディングにもお使いいただける日本語等幅フォントです。  
 自作合成フォント [Cyroit](https://omonomo.github.io/Cyroit/) にプログラミングフォント [Source Code Pro](https://adobe-fonts.github.io/source-code-pro/) と [Hasklig](https://github.com/i-tu/Hasklig) を合成した姉妹フォントになります。  
-Source Code Pro には既に [Source Han Code JP](https://ccjktype.fonts.adobe.com/2015/06/source-han-code-jp.html) という本家製作の日本語対応フォントがありますが、半角と全角の比率が異なる合成フォントとして形にできないかと思い、製作しました。  
+Source Code Pro には既に [Source Han Code JP](https://ccjktype.fonts.adobe.com/2015/06/source-han-code-jp.html) という本家製作の日本語対応フォントがありますが、半角と全角の比率が異なる合成フォントとして形にできないかと思い、製作しました。
 
 全角英数記号や半角カナ等にアンダーラインが引いてあるため、全角・半角の組み合わせになっている括弧や、誤って使われている全角チルダなどをすぐに見つけることができます。  
 また calt を利用したカーニング機能を実装しており、ラテン文字は等幅のまま前後の文字に合わせて文字間隔を調整します。
@@ -41,15 +41,15 @@ Source Code Pro には既に [Source Han Code JP](https://ccjktype.fonts.adobe.c
 
 ## ダウンロード
 
-最新版 v1.3.0 (2025-08-02)
+最新版 v1.3.1 (2025-08-31)
 
 | リンク                                                                                                          | 説明                                               |
 | --------------------------------------------------------------------------------------------------------------- | -------------------------------------------------- |
-| [フォント (Soroit)](https://github.com/omonomo/Soroit/releases/download/v1.3.0/Soroit_v1.3.0.zip)               | 通常版。半角幅が全角の1/2。                        |
-| [フォント (SoroitLoose)](https://github.com/omonomo/Soroit/releases/download/v1.3.0/SoroitLoose_v1.3.0.zip)     | 文字間隔ゆるい版。半角幅が全角の9/16。             |
-| [フォント (SoroitLG)](https://github.com/omonomo/Soroit/releases/download/v1.3.0/SoroitLG_v1.3.0.zip)           | リガチャ対応版。半角幅が全角の1/2。                |
-| [フォント (SoroitLooseLG)](https://github.com/omonomo/Soroit/releases/download/v1.3.0/SoroitLooseLG_v1.3.0.zip) | リガチャ対応文字間隔ゆるい版。半角幅が全角の9/16。 |
-| [ソースコード](https://github.com/omonomo/Soroit/archive/refs/tags/v1.3.0.zip)                                  | 使用方法は[下の方](#基本的な使い方)にあります。    |
+| [フォント (Soroit)](https://github.com/omonomo/Soroit/releases/download/v1.3.1/Soroit_v1.3.1.zip)               | 通常版。半角幅が全角の1/2。                        |
+| [フォント (SoroitLoose)](https://github.com/omonomo/Soroit/releases/download/v1.3.1/SoroitLoose_v1.3.1.zip)     | 文字間隔ゆるい版。半角幅が全角の9/16。             |
+| [フォント (SoroitLG)](https://github.com/omonomo/Soroit/releases/download/v1.3.1/SoroitLG_v1.3.1.zip)           | リガチャ対応版。半角幅が全角の1/2。                |
+| [フォント (SoroitLooseLG)](https://github.com/omonomo/Soroit/releases/download/v1.3.1/SoroitLooseLG_v1.3.1.zip) | リガチャ対応文字間隔ゆるい版。半角幅が全角の9/16。 |
+| [ソースコード](https://github.com/omonomo/Soroit/archive/refs/tags/v1.3.1.zip)                                  | 使用方法は[下の方](#基本的な使い方)にあります。    |
 
 フォントやスクリプトの使用は自己責任にてお願いいたします。  
 各ファイルを使用することで生じた不具合・損害等について omonomo は責任を負いません。  
@@ -168,14 +168,14 @@ Loose 版は名称が 「SoroitLoose...」 になります。
 
 Soroit は以下の環境でビルドできることを確認しています。
 
-- macOS Sequoia 15.6
+- macOS Sequoia 15.6.1
 - GNU bash, version 5.3.3(1)-release (aarch64-apple-darwin24.4.0)
 - FontForge 20230101
-- FontTools 4.59.0
+- FontTools 4.59.2
 
 または上記 macOS 上にて
 
-- Docker Desktop 4.43.2 (Engine 28.3.2, Compose v2.38.2-desktop.1)
+- Docker Desktop 4.45.0 (Engine 28.3.3, Compose v2.38.2-desktop.1)
   - Ubuntu 24.04.2 LTS
   - GNU bash, version 5.2.21(1)-release (aarch64-unknown-linux-gnu)
   - FontForge 20230101
