@@ -49,7 +49,8 @@ address_store_vert=$((address_store_arrow + 4)) # 保管した縦書きアドレ
 address_store_zenhan=$((address_store_vert + 109)) # 保管した全角半角アドレス(！゠⁉)
 address_store_d_hyphen=$((address_store_zenhan + 172)) # 保管した縦書き゠アドレス
 address_store_otherspace=$((address_store_d_hyphen + 1)) # 保管したその他のスペースアドレス
-address_store_liga=$((address_store_otherspace + 2)) # 保管したリガチャアドレス
+address_store_escape=$((address_store_otherspace + 2)) # 保管したエスケープ文字アドレス
+address_store_liga=$((address_store_escape + 1)) # 保管したリガチャアドレス
 address_store_end=$((address_store_liga + 2 - 1)) # 保管したグリフの最終アドレス
 
 address_vert_start="1114181" # 合成後のvert置換の先頭アドレス (リガチャなし)
@@ -73,7 +74,8 @@ address_init() {
     address_calt_barD=$((address_calt_figure + 40)) # calt置換アドレス(下に移動した |)
     address_calt_hyphenL=$((address_calt_barD + 9)) # calt置換アドレス(左に移動した *、数を変更した場合スロットの確保数を変更すること)
     address_calt_hyphenR=$((address_calt_hyphenL + 30)) # calt置換アドレス(右に移動した *)
-    address_calt_end=$((address_calt_hyphenR + 30 - 1)) # calt置換の最終アドレス (右上に移動した :)
+    address_calt_escape=$((address_calt_hyphenR + 30)) # calt置換アドレス (エスケープ文字)
+    address_calt_end=$((address_calt_escape + 3 - 1)) # calt置換の最終アドレス (右上に移動した :)
     address_calt_barDLR="24" # calt置換アドレス(左右に移動した * から、左右に移動した | までの増分)
 
     address_ss_start=$((address_calt_end + 1)) # ss置換の先頭アドレス
@@ -90,16 +92,17 @@ address_init() {
     address_ss_otherspace=$((address_ss_zero + 10)) # ss置換のその他のスペースアドレス
     address_ss_liga=$((address_ss_otherspace + 2)) # ss置換のリガチャアドレス
     address_ss_ambiguous=$((address_ss_liga + 2)) # ss置換のあいまい文字アドレス
-    address_ss_end=$((address_ss_ambiguous + 115 - 1)) # ss置換の最終アドレス
+    address_ss_escape=$((address_ss_ambiguous + 115)) # ss置換のエスケープ文字アドレス
+    address_ss_end=$((address_ss_escape + 3 - 1)) # ss置換の最終アドレス
     num_ss_glyphs_former=$((address_ss_braille - address_ss_start)) # ss置換のグリフ数(点字の前まで)
     num_ss_glyphs_latter=$((address_ss_end + 1 - address_ss_braille)) # ss置換のグリフ数(点字から後)
     num_ss_glyphs=$((address_ss_end + 1 - address_ss_start)) # ss置換の総グリフ数
 
     lookupIndex_replace=$((lookupIndex_calt + num_calt_lookups)) # 単純置換のlookupナンバー
-    num_replace_lookups="11" # 単純置換のルックアップ数 (lookupの数を変えた場合はcalt_table_makerも変更すること)
+    num_replace_lookups="12" # 単純置換のルックアップ数 (lookupの数を変えた場合はcalt_table_makerも変更すること)
 
     lookupIndex_ss=$((lookupIndex_replace + num_replace_lookups)) # ssテーブルのlookupナンバー
-    num_ss_lookups="12" # ssのルックアップ数 (lookupの数を変えた場合はtable_modificatorも変更すること)
+    num_ss_lookups="13" # ssのルックアップ数 (lookupの数を変えた場合はtable_modificatorも変更すること)
 }
 # 著作権
 copyright="Copyright (c) 2024 omonomo\n\n"
@@ -225,6 +228,7 @@ center_height_hankaku="373" # 半角文字Y座標中心
 move_x_calt_separate="-512" # 桁区切り表示のX座標移動量 (下書きモードとその他で位置が変わるので注意)
 width_zenkaku="1024" # 全角文字幅
 width_latin="614" # Latin フォントの em 値を1024に変換したときの文字幅
+move_x_calt_quote="8" # クォートのX座標戻り量 (move_x_calt_symbol から引く)
 
 # 通常版用
 scale_width_latin="85" # Latin フォントの半角英数文字の横拡大率
@@ -1931,6 +1935,22 @@ while (i < SizeOf(input_list))
         j += 1
     endloop
 
+# \ (ss13 用のグリフを作る)
+    Select(0u005c); Copy() # reverse solidus
+    Select(${address_store_escape}); Paste() # 保管所
+    Select(65552); Paste() # Temporary glyph
+    Scale(120); Copy()
+    if (input_list[i] == "${input_latin_regular}")
+        Move(-29, 0); PasteWithOffset(29, 0)
+    else
+        Move(-47, 0); PasteWithOffset(47, 0)
+    endif
+    OverlapIntersect(); Copy()
+    Select(${address_store_escape}); PasteInto() # 保管所
+    OverlapIntersect()
+    SetWidth(${width_latin})
+    Select(65552); Clear() # Temporary glyph
+
 # 一部の記号を全角にする
     Select(0u2190, 0u21ff) # ←-⇿
     SelectMore(0u2389, 0u238a) # ⎉⎊
@@ -1971,6 +1991,7 @@ while (i < SizeOf(input_list))
         SelectMore(0ua700, 0ua7ff) # 声調装飾文字・ラテン文字拡張 D
         SelectMore(0ufb00, 0ufb4f) # アルファベット表示形
  #        SelectMore(0u1d538, 0u1d56b) # 数学用英数字記号
+        SelectMore(${address_store_escape}) # 保管した reverse solidus
         if ("${liga_flag}" == "true")
             SelectMore(0ue100, 0ue129) # リガチャ
             SelectMore(${address_store_liga}, ${address_store_liga} + 1)
@@ -2058,6 +2079,7 @@ while (i < SizeOf(input_list))
         SelectMore(0ua700, 0ua7ff) # 声調装飾文字 - ラテン文字拡張 D
         SelectMore(0ufb00, 0ufb4f) # アルファベット表示形
  #        SelectMore(0u1d538, 0u1d56b) # 数学用英数字記号
+        SelectMore(${address_store_escape}) # 保管した reverse solidus
         if ("${liga_flag}" == "true")
             SelectMore(0ue100, 0ue129) # リガチャ
             SelectMore(${address_store_liga}, ${address_store_liga} + 1)
@@ -4539,6 +4561,9 @@ while (i < \$argc)
         glyphName = GlyphInfo("Name")
         Select(k); Paste()
         Move(-${move_x_calt_symbol}, 0)
+        if (symb[j] == 0u0022) # quote
+            Move(${move_x_calt_quote}, 0)
+        endif
         SetWidth(${width_hankaku})
         AddPosSub(lookupSub0, glyphName) # 左→中
         glyphName = GlyphInfo("Name")
@@ -4584,6 +4609,9 @@ while (i < \$argc)
         glyphName = GlyphInfo("Name")
         Select(k); Paste()
         Move(${move_x_calt_symbol}, 0)
+        if (symb[j] == 0u0022) # quote
+            Move(-${move_x_calt_quote}, 0)
+        endif
         SetWidth(${width_hankaku})
         AddPosSub(lookupSub0, glyphName) # 左→中
         glyphName = GlyphInfo("Name")
@@ -4604,6 +4632,41 @@ while (i < \$argc)
         j += 1
         k += 1
     endloop
+
+    lookupName = "単純置換 (エスケープ文字)"
+    AddLookup(lookupName, "gsub_single", 0, [], lookups[numlookups - 1])
+    lookupSub1 = lookupName + "サブテーブル"
+    AddLookupSubtable(lookupName, lookupSub1)
+
+    Select(0u005c); Copy() # reverse solidus
+    glyphName = GlyphInfo("Name")
+    Select(k); Paste()
+    SetWidth(${width_hankaku})
+ #    AddPosSub(lookupSub0, glyphName) # 変換前←後
+    glyphName = GlyphInfo("Name")
+    Select(0u005c) # reverse solidus
+    AddPosSub(lookupSub1, glyphName) # 変換前→後
+    k += 1
+
+    Select(${address_calt_hyphenL} + 6); Copy() # 左に移動した reverse solidus
+    glyphName = GlyphInfo("Name")
+    Select(k); Paste()
+    SetWidth(${width_hankaku})
+ #    AddPosSub(lookupSub0, glyphName) # 変換前←後
+    glyphName = GlyphInfo("Name")
+    Select(${address_calt_hyphenL} + 6) # 左に移動した reverse solidus
+    AddPosSub(lookupSub1, glyphName) # 変換前→後
+    k += 1
+
+    Select(${address_calt_hyphenR} + 6); Copy() # 右に移動した reverse solidus
+    glyphName = GlyphInfo("Name")
+    Select(k); Paste()
+    SetWidth(${width_hankaku})
+ #    AddPosSub(lookupSub0, glyphName) # 変換前←後
+    glyphName = GlyphInfo("Name")
+    Select(${address_calt_hyphenR} + 6) # 右に移動した reverse solidus
+    AddPosSub(lookupSub1, glyphName) # 変換前→後
+    k += 1
 
     # calt をスクリプトで扱う方法が分からないので一旦ダミーをセットしてttxで上書きする
     j = 0
@@ -5614,6 +5677,37 @@ while (i < \$argc)
         j += 1
         k += 1
     endloop
+
+    ss += 1
+# ss13 エスケープ文字を細線化
+    lookupName = "'ss" + ToString(ss) + "' スタイルセット" + ToString(ss)
+    lookupSub = lookupName + "サブテーブル"
+
+    Select(${address_store_escape}); Copy() # 加工した reverse solidus
+    Select(k); Paste()
+    SetWidth(${width_hankaku})
+    glyphName = GlyphInfo("Name")
+    Select(0u005c) # reverse solidus
+    AddPosSub(lookupSub, glyphName)
+    k += 1
+
+    Select(${address_store_escape}); Copy() # 加工した reverse solidus
+    Select(k); Paste()
+    Move(-${move_x_calt_symbol}, 0)
+    SetWidth(${width_hankaku})
+    glyphName = GlyphInfo("Name")
+    Select(${address_calt_hyphenL} + 6) # 左に移動した reverse solidus
+    AddPosSub(lookupSub, glyphName)
+    k += 1
+
+    Select(${address_store_escape}); Copy() # 加工した reverse solidus
+    Select(k); Paste()
+    Move(${move_x_calt_symbol}, 0)
+    SetWidth(${width_hankaku})
+    glyphName = GlyphInfo("Name")
+    Select(${address_calt_hyphenR} + 6) # 右に移動した reverse solidus
+    AddPosSub(lookupSub, glyphName)
+    k += 1
 
     ss += 1
 
