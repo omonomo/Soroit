@@ -11,7 +11,7 @@ Source Code Pro には既に [Source Han Code JP](https://ccjktype.fonts.adobe.c
 
 その他にも全角・半角・ノーブレークスペースを可視化したバージョンや自動で桁区切りマークを表示するバージョン、カラー絵文字フォントとの併用を前提として絵文字を減らしたバージョンなども用意してあり、使い分けて使用できます。
 
-英数文字が窮屈に感じられる方は、半角と全角の横幅の比率を9:16にしたバージョンもございますので、お好みによりお選びください。
+英数文字が窮屈に感じられる方は、半角と全角の横幅の比率を9:16にしたバージョンもありますので、お好みによりお選びください。
 
 フォント生成用のスクリプトを利用すれば、必要な機能のみ実装したフォントをご自身で作っていただくこともできます。
 
@@ -33,7 +33,7 @@ Source Code Pro には既に [Source Han Code JP](https://ccjktype.fonts.adobe.c
 <img alt="ScreenShot" src="./images/SS_4.gif" width="165">
 
 半角幅の違いサンプル (上: 1/2、下: 9/16)  
-<img alt="ScreenShot" src="./images/SS_5.png" width="602">  
+<img alt="ScreenShot" src="./images/SS_5.png" width="602"><br>
 <img alt="ScreenShot" src="./images/SS_6.png" width="602">
 
 追加した記号等のコードポイント  
@@ -41,19 +41,21 @@ Source Code Pro には既に [Source Han Code JP](https://ccjktype.fonts.adobe.c
 
 ## ダウンロード
 
-最新版 v1.3.1 (2025-08-31)
+最新版 v1.4.0 (2025-10-01)
 
 | リンク                                                                                                          | 説明                                               |
 | --------------------------------------------------------------------------------------------------------------- | -------------------------------------------------- |
-| [フォント (Soroit)](https://github.com/omonomo/Soroit/releases/download/v1.3.1/Soroit_v1.3.1.zip)               | 通常版。半角幅が全角の1/2。                        |
-| [フォント (SoroitLoose)](https://github.com/omonomo/Soroit/releases/download/v1.3.1/SoroitLoose_v1.3.1.zip)     | 文字間隔ゆるい版。半角幅が全角の9/16。             |
-| [フォント (SoroitLG)](https://github.com/omonomo/Soroit/releases/download/v1.3.1/SoroitLG_v1.3.1.zip)           | リガチャ対応版。半角幅が全角の1/2。                |
-| [フォント (SoroitLooseLG)](https://github.com/omonomo/Soroit/releases/download/v1.3.1/SoroitLooseLG_v1.3.1.zip) | リガチャ対応文字間隔ゆるい版。半角幅が全角の9/16。 |
-| [ソースコード](https://github.com/omonomo/Soroit/archive/refs/tags/v1.3.1.zip)                                  | 使用方法は[下の方](#基本的な使い方)にあります。    |
+| [フォント (Soroit)](https://github.com/omonomo/Soroit/releases/download/v1.4.0/Soroit_v1.4.0.zip)               | 通常版。半角幅が全角の1/2。                        |
+| [フォント (SoroitLoose)](https://github.com/omonomo/Soroit/releases/download/v1.4.0/SoroitLoose_v1.4.0.zip)     | 文字間隔ゆるい版。半角幅が全角の9/16。             |
+| [フォント (SoroitLG)](https://github.com/omonomo/Soroit/releases/download/v1.4.0/SoroitLG_v1.4.0.zip)           | リガチャ対応版。半角幅が全角の1/2。                |
+| [フォント (SoroitLooseLG)](https://github.com/omonomo/Soroit/releases/download/v1.4.0/SoroitLooseLG_v1.4.0.zip) | リガチャ対応文字間隔ゆるい版。半角幅が全角の9/16。 |
+| [ソースコード](https://github.com/omonomo/Soroit/archive/refs/tags/v1.4.0.zip)                                  | 使用方法は[下の方](#基本的な使い方)にあります。    |
 
 フォントやスクリプトの使用は自己責任にてお願いいたします。  
 各ファイルを使用することで生じた不具合・損害等について omonomo は責任を負いません。  
 [ライセンス](#ライセンス)に従ってのご使用をお願いいたします。
+
+過去のバージョンや更新履歴は[こちら](https://github.com/omonomo/Soroit/releases)をご参照ください。
 
 ## その他の特徴
 
@@ -61,7 +63,7 @@ Source Code Pro には既に [Source Han Code JP](https://ccjktype.fonts.adobe.c
 - 主に仮名文字のグリフは [Circle M+ 1m](https://itouhiro.github.io/mixfont-mplus-ipa/) を使用しています。
 - 主に漢字のグリフは [BIZ UDゴシック](https://github.com/googlefonts/morisawa-biz-ud-gothic) を使用しています。
 - 主に変体仮名のグリフは [NINJAL 変体仮名フォント](https://cid.ninjal.ac.jp/kana/font/) を使用しています。
-- コーディング用リガチャのグリフは [Hasklig](https://github.com/i-tu/Hasklig) を使用しています。
+- コーディング用リガチャのグリフは [Hasklig](https://github.com/i-tu/Hasklig) を使用しています。Hasklig は主に Haskell 用のリガチャを提供します。
 - [Nerd Fonts](https://www.nerdfonts.com) を追加しています。
 - [Cyroit](https://omonomo.github.io/Cyroit/) に Source Code Pro と Hasklig を合成したため、[Inconsolata](https://levien.com/type/myfonts/inconsolata.html) 由来のグリフも含まれます。
 - [ricty_generator](https://rictyfonts.github.io) を Fork したスクリプトで自動生成させています。
@@ -103,7 +105,7 @@ Source Code Pro には既に [Source Han Code JP](https://ccjktype.fonts.adobe.c
 ### 機能的なものについて
 
 - Cyroit の特長を継承しています。
-- コーディング用リガチャは Hasklig のグリフにのみ対応しています。
+- コーディング用リガチャは Hasklig のグリフにのみ対応しています。リガチャは他の calt 設定より優先されます。
 - IVS を利用した漢字の異体字表示に対応しています。
 - ccmp によるアイヌ語カナ表記に対応しています。
 - vert のみですが、縦書き表示に対応しています。
@@ -136,24 +138,29 @@ Loose 版は名称が 「SoroitLoose...」 になります。
 | Soroit DG | <img alt="DG" src="./images/DG.png" width="268">         | 桁区切り表示版。<br> たくさん並んだ数字とにらめっこする時間を短縮できます。                                             |
 | Soroit FX | <img alt="TS" src="./images/FX.png" width="268">         | 文字間隔固定版。calt と相性が悪いソフト用。<br> また他のバージョンよりも軽快に動作します。                              |
 | Soroit HB | <img alt="HB" src="./images/HB.png" width="268">         | 平凡版。全てのスペースが不可視でグリフ改変も抑えたバージョン。<br> プリントアウト用にどうぞ。                           |
+| Soroit TM | <img alt="TM" src="./images/TM.png" width="268">         | ターミナル版。<br>私用領域以外の中立・曖昧幅の文字を半角にしたバージョン。                                              |
 
 ### 通常版、絵文字減らした版のスタイルセットについて
 
 設定方法については、[Fira Code の説明](https://github.com/tonsky/FiraCode/wiki/How-to-enable-stylistic-sets)が分かりやすいと思います。
 
-| タグ名 | サンプル                                             | 内容                                                                                      |
-| ------ | ---------------------------------------------------- | ----------------------------------------------------------------------------------------- |
-| ss01   | <img alt="ss01" src="./images/ss01.png" width="268"> | 全角スペース可視化                                                                        |
-| ss02   | <img alt="ss02" src="./images/ss02.png" width="268"> | 半角スペース可視化                                                                        |
-| ss03   | <img alt="ss03" src="./images/ss03.png" width="268"> | 3桁区切りマーク表示                                                                       |
-| ss04   | <img alt="ss04" src="./images/ss04.png" width="268"> | 4桁区切りマーク表示                                                                       |
-| ss05   | <img alt="ss05" src="./images/ss05.png" width="268"> | 小数小文字化                                                                              |
-| ss06   | <img alt="ss06" src="./images/ss06.png" width="268"> | 全角・半角形の下線、点字の外枠消去                                                        |
-| ss07   | <img alt="ss07" src="./images/ss07.png" width="268"> | 識別性向上グリフ無効                                                                      |
-| ss08   | <img alt="ss08" src="./images/ss08.png" width="268"> | DQVZ のグリフ変更                                                                         |
-| ss09   | <img alt="ss09" src="./images/ss09.png" width="268"> | JIS に含まれる罫線を全角化、矢印を細線化<br> (環境によって全角にならないことがあります)   |
-| ss10   | <img alt="ss10" src="./images/ss10.png" width="268"> | 0のスラッシュ消去                                                                         |
-| ss11   | <img alt="ss11" src="./images/ss11.png" width="268"> | ss01、ss02で表示される以外のスペース可視化<br> (環境によって可視化されないことがあります) |
+| タグ名 | サンプル                                             | 内容                                                                                        |
+| ------ | ---------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| ss01   | <img alt="ss01" src="./images/ss01.png" width="268"> | 全角スペース可視化                                                                          |
+| ss02   | <img alt="ss02" src="./images/ss02.png" width="268"> | 半角スペース可視化                                                                          |
+| ss03   | <img alt="ss03" src="./images/ss03.png" width="268"> | 3桁区切りマーク表示                                                                         |
+| ss04   | <img alt="ss04" src="./images/ss04.png" width="268"> | 4桁区切りマーク表示                                                                         |
+| ss05   | <img alt="ss05" src="./images/ss05.png" width="268"> | 小数小文字化                                                                                |
+| ss06   | <img alt="ss06" src="./images/ss06.png" width="268"> | 全角・半角形の下線、点字の外枠消去                                                          |
+| ss07   | <img alt="ss07" src="./images/ss07.png" width="268"> | 識別性向上グリフ無効                                                                        |
+| ss08   | <img alt="ss08" src="./images/ss08.png" width="268"> | DQVZ のグリフ変更                                                                           |
+| ss09   | <img alt="ss09" src="./images/ss09.png" width="268"> | JIS に含まれる罫線を全角化、矢印を細線化<br> (環境によって全角にならないことがあります)     |
+| ss10   | <img alt="ss10" src="./images/ss10.png" width="268"> | 0のスラッシュ消去                                                                           |
+| ss11   | <img alt="ss11" src="./images/ss11.png" width="268"> | ss01、ss02で表示される以外のスペース可視化<br> (環境によって可視化されないことがあります)   |
+| ss12   | <img alt="ss12" src="./images/ss12.png" width="268"> | ファイル名に使われがちな曖昧幅の文字を半角化<br> (環境によって半角にならないことがあります) |
+| ss13   | <img alt="ss13" src="./images/ss13.png" width="268"> | バックスラッシュ細線化<br> (2つ並んだ場合、右側は通常の太さになります ※)                   |
+
+※リガチャ対応版はリガチャ設定が優先されるため2つとも通常の太さになります。
 
 ## ライセンス
 
@@ -168,15 +175,15 @@ Loose 版は名称が 「SoroitLoose...」 になります。
 
 Soroit は以下の環境でビルドできることを確認しています。
 
-- macOS Sequoia 15.6.1
+- macOS Sequoia 15.7
 - GNU bash, version 5.3.3(1)-release (aarch64-apple-darwin24.4.0)
 - FontForge 20230101
-- FontTools 4.59.2
+- FontTools 4.60.0
 
 または上記 macOS 上にて
 
-- Docker Desktop 4.45.0 (Engine 28.3.3, Compose v2.38.2-desktop.1)
-  - Ubuntu 24.04.2 LTS
+- Docker Desktop 4.46.0 (Engine 28.4.0, Compose v2.39.2-desktop.1)
+  - Ubuntu 24.04.3 LTS
   - GNU bash, version 5.2.21(1)-release (aarch64-unknown-linux-gnu)
   - FontForge 20230101
   - FontTooles 4.46.0
@@ -247,7 +254,7 @@ Cyroit の生成スクリプトと使い方は同じです。
   &emsp; &emsp;カーニング設定はラテン文字拡張 A までになります。  
   &emsp; &emsp;・パラメータ有りの場合、パラメータに応じたフォントのみ生成します。  
   &emsp; &emsp;・パラメータ無し、`-n` 有りの場合、スタイルセットに対応した (`S` を有効にした) フォントのみ生成します。  
-  &emsp; &emsp;・パラメータ無し、`-n` 無しの場合、デフォルトの全てのバージョンから絵文字減らした版以外を生成します。  
+  &emsp; &emsp;・パラメータ無し、`-n` 無しの場合、デフォルトの全てのバージョンから絵文字減らした版、ターミナル版以外を生成します。  
   `オプション無し`  
   &emsp; &emsp;カーニング設定は基本ラテン文字限定になります。パラメータ無しの場合 `lo` を有効にしたフォントを生成します。
 
@@ -277,6 +284,7 @@ FontForge のスクリプト機能を利用してフォントの合成とグリ�
   `-N string` フォントファミリー名を _string_ にします。省略すると「Soroit」になります。  
   `-n string` フォントファミリー名の接尾語 (「BS」や「SP」の部分) を _string_ にします。  
   `-w` 合成フォントを Loose 版にします。  
+  `-a` 私用領域以外の中立・曖昧な幅の文字を半角にします。  
   `-L` 生成フォントをリガチャ対応版にします。`-c` に関係なく有効になります。  
   `-Z` 全角スペースを可視化しません。  
   `-z` 半角スペースを可視化しません。  
