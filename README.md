@@ -41,15 +41,15 @@ Source Code Pro には既に [Source Han Code JP](https://ccjktype.fonts.adobe.c
 
 ## ダウンロード
 
-最新版 v1.4.0 (2025-10-01)
+最新版 v1.4.1 (2025-11-06)
 
 | リンク                                                                                                          | 説明                                               |
 | --------------------------------------------------------------------------------------------------------------- | -------------------------------------------------- |
-| [フォント (Soroit)](https://github.com/omonomo/Soroit/releases/download/v1.4.0/Soroit_v1.4.0.zip)               | 通常版。半角幅が全角の1/2。                        |
-| [フォント (SoroitLoose)](https://github.com/omonomo/Soroit/releases/download/v1.4.0/SoroitLoose_v1.4.0.zip)     | 文字間隔ゆるい版。半角幅が全角の9/16。             |
-| [フォント (SoroitLG)](https://github.com/omonomo/Soroit/releases/download/v1.4.0/SoroitLG_v1.4.0.zip)           | リガチャ対応版。半角幅が全角の1/2。                |
-| [フォント (SoroitLooseLG)](https://github.com/omonomo/Soroit/releases/download/v1.4.0/SoroitLooseLG_v1.4.0.zip) | リガチャ対応文字間隔ゆるい版。半角幅が全角の9/16。 |
-| [ソースコード](https://github.com/omonomo/Soroit/archive/refs/tags/v1.4.0.zip)                                  | 使用方法は[下の方](#基本的な使い方)にあります。    |
+| [フォント (Soroit)](https://github.com/omonomo/Soroit/releases/download/v1.4.1/Soroit_v1.4.1.zip)               | 通常版。半角幅が全角の1/2。                        |
+| [フォント (SoroitLoose)](https://github.com/omonomo/Soroit/releases/download/v1.4.1/SoroitLoose_v1.4.1.zip)     | 文字間隔ゆるい版。半角幅が全角の9/16。             |
+| [フォント (SoroitLG)](https://github.com/omonomo/Soroit/releases/download/v1.4.1/SoroitLG_v1.4.1.zip)           | リガチャ対応版。半角幅が全角の1/2。                |
+| [フォント (SoroitLooseLG)](https://github.com/omonomo/Soroit/releases/download/v1.4.1/SoroitLooseLG_v1.4.1.zip) | リガチャ対応文字間隔ゆるい版。半角幅が全角の9/16。 |
+| [ソースコード](https://github.com/omonomo/Soroit/archive/refs/tags/v1.4.1.zip)                                  | 使用方法は[下の方](#基本的な使い方)にあります。    |
 
 フォントやスクリプトの使用は自己責任にてお願いいたします。  
 各ファイルを使用することで生じた不具合・損害等について omonomo は責任を負いません。  
@@ -175,14 +175,14 @@ Loose 版は名称が 「SoroitLoose...」 になります。
 
 Soroit は以下の環境でビルドできることを確認しています。
 
-- macOS Sequoia 15.7
+- macOS Sequoia 15.7.1
 - GNU bash, version 5.3.3(1)-release (aarch64-apple-darwin24.4.0)
-- FontForge 20230101
-- FontTools 4.60.0
+- FontForge 20251009
+- FontTools 4.60.1
 
 または上記 macOS 上にて
 
-- Docker Desktop 4.46.0 (Engine 28.4.0, Compose v2.39.2-desktop.1)
+- Docker Desktop 4.49.0 (Engine 28.5.1, Compose v2.40.3-desktop.1)
   - Ubuntu 24.04.3 LTS
   - GNU bash, version 5.2.21(1)-release (aarch64-unknown-linux-gnu)
   - FontForge 20230101
