@@ -45,11 +45,11 @@ Source Code Pro には既に [Source Han Code JP](https://ccjktype.fonts.adobe.c
 
 | リンク                                                                                                          | 説明                                               |
 | --------------------------------------------------------------------------------------------------------------- | -------------------------------------------------- |
-| [フォント (Soroit)](https://github.com/omonomo/Soroit/releases/download/v1.4.2/Soroit_v1.4.2.zip)               | 通常版。半角幅が全角の1/2。                        |
-| [フォント (SoroitLoose)](https://github.com/omonomo/Soroit/releases/download/v1.4.2/SoroitLoose_v1.4.2.zip)     | 文字間隔ゆるい版。半角幅が全角の9/16。             |
-| [フォント (SoroitLG)](https://github.com/omonomo/Soroit/releases/download/v1.4.2/SoroitLG_v1.4.2.zip)           | リガチャ対応版。半角幅が全角の1/2。                |
-| [フォント (SoroitLooseLG)](https://github.com/omonomo/Soroit/releases/download/v1.4.2/SoroitLooseLG_v1.4.2.zip) | リガチャ対応文字間隔ゆるい版。半角幅が全角の9/16。 |
-| [ソースコード](https://github.com/omonomo/Soroit/archive/refs/tags/v1.4.2.zip)                                  | 使用方法は[下の方](#基本的な使い方)にあります。    |
+| [フォント (Soroit)](https://github.com/omonomo/Soroit/releases/download/v1.4.3/Soroit_v1.4.3.zip)               | 通常版。半角幅が全角の1/2。                        |
+| [フォント (SoroitLoose)](https://github.com/omonomo/Soroit/releases/download/v1.4.3/SoroitLoose_v1.4.3.zip)     | 文字間隔ゆるい版。半角幅が全角の9/16。             |
+| [フォント (SoroitLG)](https://github.com/omonomo/Soroit/releases/download/v1.4.3/SoroitLG_v1.4.3.zip)           | リガチャ対応版。半角幅が全角の1/2。                |
+| [フォント (SoroitLooseLG)](https://github.com/omonomo/Soroit/releases/download/v1.4.3/SoroitLooseLG_v1.4.3.zip) | リガチャ対応文字間隔ゆるい版。半角幅が全角の9/16。 |
+| [ソースコード](https://github.com/omonomo/Soroit/archive/refs/tags/v1.4.3.zip)                                  | 使用方法は[下の方](#基本的な使い方)にあります。    |
 
 フォントやスクリプトの使用は自己責任にてお願いいたします。  
 各ファイルを使用することで生じた不具合・損害等について omonomo は責任を負いません。  
