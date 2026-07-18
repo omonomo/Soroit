@@ -508,6 +508,7 @@ _EOT_
         <FeatureIndex index="28" value="32"/>\
         <FeatureIndex index="29" value="33"/>\
         <FeatureIndex index="30" value="34"/>\
+        <FeatureIndex index="31" value="35"/>\
         ,' "${P%%.ttf}.ttx" # index9を上書き、以降 index(13 + ss フィーチャの数)、value(index + 4) を追加、caltは後でリガチャ用caltと統合
       else # ss非対応の場合
         sed -i.bak -e 's,<FeatureIndex index="9" value=".*"/>,<FeatureIndex index="9" value="13"/>\
@@ -541,10 +542,11 @@ _EOT_
         <FeatureIndex index="27" value="31"/>\
         <FeatureIndex index="28" value="32"/>\
         <FeatureIndex index="29" value="33"/>\
+        <FeatureIndex index="30" value="34"/>\
         ,' "${P%%.ttf}.ttx" # index9を上書き、以降 index(12 + ss フィーチャの数)、value(index + 4) を追加
         if [ "${calt_ok_flag}" = "true" ]; then # calt対応であればさらに1つ index 追加
-          sed -i.bak -e 's,<FeatureIndex index="29" value=".*"/>,<FeatureIndex index="29" value="33"/>\
-          <FeatureIndex index="30" value="34"/>\
+          sed -i.bak -e 's,<FeatureIndex index="30" value=".*"/>,<FeatureIndex index="30" value="34"/>\
+          <FeatureIndex index="31" value="35"/>\
           ,' "${P%%.ttf}.ttx"
         fi
       else # ss非対応の場合
