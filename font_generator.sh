@@ -450,7 +450,7 @@ move_x_oblique=$((move_x_oblique * 100)) # Transform()用 (移動量 * 100)
 cat << _EOT_
 
 ----------------------------
-Custom font generator
+${font_familyname}${font_familyname_suffix:+ ${font_familyname_suffix}} generator
 Font version: ${font_version}
 ----------------------------
 
@@ -2898,22 +2898,22 @@ while (i < SizeOf(input_list))
     Select(0ue0bd);         Scale(50,  ${scale_height_pl}, 0,    ${center_height_pl}); Move(0,  ${move_y_pl}); SetWidth(512)
     Select(0ue0be);         Scale(50,  ${scale_height_pl}, 1024, ${center_height_pl}); Move(-512 + 8,  ${move_y_pl}); SetWidth(512)
     Select(0ue0bf);         Scale(50,  ${scale_height_pl}, 1024, ${center_height_pl}); Move(-512,      ${move_y_pl}); SetWidth(512)
-    Select(0ue0c0, 0ue0c1); Scale(95,  ${scale_height_pl}, 0,    ${center_height_pl}); Move(0, ${move_y_pl2}); SetWidth(1024)
-    Select(0ue0c2, 0ue0c3); Scale(95,  ${scale_height_pl}, 1024, ${center_height_pl}); Move(0, ${move_y_pl2}); SetWidth(1024)
-    Select(0ue0c4);         Scale(105, ${scale_height_pl}, 0,    ${center_height_pl}); Move(0, ${move_y_pl}); SetWidth(1024)
-    Select(0ue0c5);         Scale(105, ${scale_height_pl}, 1024, ${center_height_pl}); Move(0, ${move_y_pl}); SetWidth(1024)
-    Select(0ue0c6);         Scale(105, ${scale_height_pl}, 0,    ${center_height_pl}); Move(0, ${move_y_pl}); SetWidth(1024)
-    Select(0ue0c7);         Scale(105, ${scale_height_pl}, 1024, ${center_height_pl}); Move(0, ${move_y_pl}); SetWidth(1024)
-    Select(0ue0c8);         Scale(95,  ${scale_height_pl}, 0,    ${center_height_pl}); Move(0, ${move_y_pl}); SetWidth(1024)
-    Select(0ue0ca);         Scale(95,  ${scale_height_pl}, 1024, ${center_height_pl}); Move(0, ${move_y_pl}); SetWidth(1024)
-    Select(0ue0cc);         Scale(105, ${scale_height_pl}, 0,    ${center_height_pl}); Move(0, ${move_y_pl}); SetWidth(1024)
-    Select(0ue0cd);         Scale(105, ${scale_height_pl2}, 0,   ${center_height_pl}); Move(-21, ${move_y_pl}); SetWidth(1024)
-    Select(0ue0ce, 0ue0d0); Move(0, ${move_y_pl}); SetWidth(1024)
-    Select(0ue0d1);         Scale(105, ${scale_height_pl2}, 0,   ${center_height_pl}); Move(-21, ${move_y_pl}); SetWidth(1024)
-    Select(0ue0d2);         Scale(105, ${scale_height_pl}, 0,    ${center_height_pl}); Move(0, ${move_y_pl}); SetWidth(1024)
-    Select(0ue0d4);         Scale(105, ${scale_height_pl}, 1024, ${center_height_pl}); Move(0, ${move_y_pl});SetWidth(1024)
-    Select(0ue0d6);         Scale(105, ${scale_height_pl}, 0,    ${center_height_pl}); Move( 33, ${move_y_pl}); SetWidth(1024)
-    Select(0ue0d7);         Scale(105, ${scale_height_pl}, 1024, ${center_height_pl}); Move(-33, ${move_y_pl});SetWidth(1024)
+    Select(0ue0c0, 0ue0c1); Scale(95,  ${scale_height_pl}, 0,    ${center_height_pl}); Move(0, ${move_y_pl2}); SetWidth(512)
+    Select(0ue0c2, 0ue0c3); Scale(95,  ${scale_height_pl}, 1024, ${center_height_pl}); Move(0, ${move_y_pl2}); SetWidth(512)
+    Select(0ue0c4);         Scale(105, ${scale_height_pl}, 0,    ${center_height_pl}); Move(0, ${move_y_pl}); SetWidth(512)
+    Select(0ue0c5);         Scale(105, ${scale_height_pl}, 1024, ${center_height_pl}); Move(0, ${move_y_pl}); SetWidth(512)
+    Select(0ue0c6);         Scale(105, ${scale_height_pl}, 0,    ${center_height_pl}); Move(0, ${move_y_pl}); SetWidth(512)
+    Select(0ue0c7);         Scale(105, ${scale_height_pl}, 1024, ${center_height_pl}); Move(0, ${move_y_pl}); SetWidth(512)
+    Select(0ue0c8);         Scale(95,  ${scale_height_pl}, 0,    ${center_height_pl}); Move(0, ${move_y_pl}); SetWidth(512)
+    Select(0ue0ca);         Scale(95,  ${scale_height_pl}, 1024, ${center_height_pl}); Move(0, ${move_y_pl}); SetWidth(512)
+    Select(0ue0cc);         Scale(105, ${scale_height_pl}, 0,    ${center_height_pl}); Move(0, ${move_y_pl}); SetWidth(512)
+    Select(0ue0cd);         Scale(105, ${scale_height_pl2}, 0,   ${center_height_pl}); Move(-21, ${move_y_pl}); SetWidth(512)
+    Select(0ue0ce, 0ue0d0); Move(0, ${move_y_pl}); SetWidth(512)
+    Select(0ue0d1);         Scale(105, ${scale_height_pl2}, 0,   ${center_height_pl}); Move(-21, ${move_y_pl}); SetWidth(512)
+    Select(0ue0d2);         Scale(75, ${scale_height_pl}, 0,    ${center_height_pl}); Move(-5, ${move_y_pl}); SetWidth(512)
+    Select(0ue0d4);         Scale(75, ${scale_height_pl}, 1024, ${center_height_pl}); Move(-512 + 5, ${move_y_pl});SetWidth(512)
+    Select(0ue0d6);         Scale(73, ${scale_height_pl}, 0,    ${center_height_pl}); Move(17, ${move_y_pl}); SetWidth(512)
+    Select(0ue0d7);         Scale(73, ${scale_height_pl}, 1024, ${center_height_pl}); Move(-512 - 17, ${move_y_pl});SetWidth(512)
 
 # Font Awesome Extension
     Print("Edit Font Awesome Extension")
@@ -3096,6 +3096,8 @@ while (i < \$argc)
         SelectMore(0ue0b5)
         SelectMore(0ue0b8, 0ue0b9)
         SelectMore(0ue0bc, 0ue0bd)
+        SelectMore(0ue0d2)
+        SelectMore(0ue0d6)
         SetWidth(${width_hankaku})
 
         Select(0ue0b2, 0ue0b3)
@@ -3103,7 +3105,28 @@ while (i < \$argc)
         SelectMore(0ue0b7)
         SelectMore(0ue0ba, 0ue0bb)
         SelectMore(0ue0be, 0ue0bf)
+        SelectMore(0ue0d4)
+        SelectMore(0ue0d7)
         Move(${move_x_hankaku} * 2, 0)
+        SetWidth(${width_hankaku})
+
+        Select(0ue0c0, 0ue0c1)
+        SelectMore(0ue0c4)
+        SelectMore(0ue0c6)
+        SelectMore(0ue0c8)
+        SelectMore(0ue0cc, 0ue0cd)
+        SelectMore(0ue0d1)
+        SetWidth(${width_hankaku})
+
+        Select(0ue0c2, 0ue0c3)
+        SelectMore(0ue0c5)
+        SelectMore(0ue0c7)
+        SelectMore(0ue0ca)
+        Move(${width_hankaku} * 2 - ${width_zenkaku}, 0)
+        SetWidth(${width_hankaku})
+
+        Select(0ue0ce, 0ue0d0)
+        Move((${width_hankaku} * 2 - ${width_zenkaku}) / 2, 0)
         SetWidth(${width_hankaku})
     endif
 
@@ -3145,7 +3168,7 @@ while (i < \$argc)
     ChangeWeight(6)
     CorrectDirection()
     Move(-256, 0)
-    SetWidth(512)
+    SetWidth(${width_hankaku})
 
     Select(65552); Clear() # Temporary glyph
 
@@ -3185,7 +3208,7 @@ while (i < \$argc)
     Select(0u2635); PasteInto(); OverlapIntersect() # ☵
     Select(0u2636); PasteInto(); OverlapIntersect() # ☶
     Select(0u2637); PasteInto(); OverlapIntersect() # ☷
-    Select(0u2630, 0u2637); SetWidth(1024)
+    Select(0u2630, 0u2637); SetWidth(${width_zenkaku})
 
     Select(65552, 65555); Clear() # Temporary glyph
 
@@ -4563,6 +4586,14 @@ while (i < \$argc)
         SelectMore(${address_store_otherspace}) # 保管したその他の全角スペース
         Paste()
         SetWidth(${width_hankaku})
+
+        Select(0ue000, 0uf8ff) # Nerd Fonts
+        SelectMore(0uf0001, 0uf1aff)
+        foreach
+            if (WorthOutputting())
+                SetWidth(${width_hankaku})
+            endif
+        endloop
 
     endif
 
